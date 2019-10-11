@@ -15,4 +15,12 @@ public class Map {
         background.draw();
         background.grow(0,0);
     }
+
+    public int getHeight() {
+        return background.getHeight();
+    }
+
+    public int getWidth(){
+        return background.getWidth();
+    }
 }
