@@ -6,6 +6,9 @@ public class Game {
 
     private Map map = new Map();
 
+    //para test
+    private Player player = new Player();
+
     public Game() {
 
 
@@ -14,6 +17,9 @@ public class Game {
 
     public void start() {
         map.init();
+
+
+
 
 
     }
