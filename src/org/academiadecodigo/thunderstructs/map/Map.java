@@ -13,6 +13,6 @@ public class Map {
 
     public void init() {
         background.draw();
-        background.grow(400,400);
+        background.grow(0,0);
     }
 }
