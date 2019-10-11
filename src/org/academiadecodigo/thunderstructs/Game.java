@@ -16,8 +16,10 @@ public class Game {
 
     public Game() {
 
+
+        player = new Player();
         map = new Map();
-        victoryPosX = 500;
+        victoryPosX = 55;
         victoryPosY = 300;
         victory = false;
 
@@ -26,24 +28,12 @@ public class Game {
     public void start() {
 
         //TODO: WELCOME SCREENS
-
-        map.init();
-        player.init();
-
-        while (!victory) {
-
-            player.move();
-
-
-            if(player.getX() == victoryPosX && player.getY() == victoryPosY) {
-                victory = true;
-            }
-        }
-
         Keyboard keyboard = new Keyboard(player);
 
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
+
+        map.init();
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -53,6 +43,25 @@ public class Game {
 
         keyboard.addEventListener(left);
         keyboard.addEventListener(right);
+
+
+        System.out.println(player.getX());
+        System.out.println(player.getY());
+
+        while(!victory) {
+
+            player.init();
+            if (player.getX() >= victoryPosX && player.getY() == victoryPosY) {
+
+                System.out.println("WIN");
+                victory = true;
+            }
+        }
+
+
+
+
+
 
         //TODO: ENDING SCREENS
 
