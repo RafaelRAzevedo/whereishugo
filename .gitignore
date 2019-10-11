@@ -144,6 +144,106 @@ fabric.properties
 modules.xml
 .idea/misc.xml
 *.ipr
+  1
+  2 # Created by https://www.gitignore.io/api/java,macos,windows,intellij,intell    ij+all
+  3 # Edit at https://www.gitignore.io/?templates=java,macos,windows,intellij,in    tellij+all
+  4
+  5 ### Intellij ###
+  6 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLi    on, Android Studio and WebStorm
+  7 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544    839
+  8
+  9 # User-specific stuff
+ 10 .idea/**/workspace.xml
+ 11 .idea/**/tasks.xml
+ 12 .idea/**/usage.statistics.xml
+ 13 .idea/**/dictionaries
+ 14 .idea/**/shelf
+ 15
+ 16 # Generated files
+ 17 .idea/**/contentModel.xml
+ 18
+ 19 # Sensitive or high-churn files
+ 20 .idea/**/dataSources/
+".gitignore" 230L, 4266C
+  1
+  2 # Created by https://www.gitignore.io/api/java,macos,windows,intellij,intellii
+    j+all
+  3 # Edit at https://www.gitignore.io/?templates=java,macos,windows,intellij,intt
+    ellij+all
+  4
+  5 ### Intellij ###
+  6 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLioo
+    n, Android Studio and WebStorm
+  7 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/20654488
+    39
+  8
+  9 # User-specific stuff
+ 10 .idea/**/workspace.xml
+ 11 .idea/**/tasks.xml
+ 12 .idea/**/usage.statistics.xml
+ 13 .idea/**/dictionaries
+ 14 .idea/**/shelf
+ 15
+ 16 # Generated files
+ 17 .idea/**/contentModel.xml
+ 18
+ 19 # Sensitive or high-churn files
+ 20 .idea/**/dataSources/
+125 # JIRA plugin
+126
+127 # Cursive Clojure plugin
+128
+129 # Crashlytics plugin (for Android Studio and IntelliJ)
+130
+131 # Editor-based Rest Client
+132
+133 # Android studio 3.1+ serialized cache file
+134
+135 ### Intellij+all Patch ###
+136 # Ignores the whole .idea folder and all .iml files
+137 # See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
+138
+139 .idea/
+140
+141 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
+142
+143 *.iml
+144 modules.xml
+145 .idea/misc.xml
+146 *.ipr
+147
+148 # Sonarlint plugin
+149 .idea/sonarlint
+150
+151 ### Java ###
+152 # Compiled class file
+153 *.class
+154
+155 # Log file
+156 *.log
+157
+158 # BlueJ files
+159 *.ctxt
+160
+161 # Mobile Tools for Java (J2ME)
+162 .mtj.tmp/
+163
+164 # Package Files #
+165 *.jar
+166 *.war
+167 *.nar
+168 *.ear
+169 *.zip
+170 *.tar.gz
+171 *.rar
+172
+173 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+174 hs_err_pid*
+175
+176 ### macOS ###
+177 # General
+178 .DS_Store
+179 .AppleDouble
 
 # Sonarlint plugin
 .idea/sonarlint
