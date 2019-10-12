@@ -11,7 +11,7 @@ class Game {
 
     private Map map;
     private Player player;
-    private int numberOfRocks = 10;
+    private int numberOfRocks = 15;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
 
     private Floor floor;
@@ -26,7 +26,7 @@ class Game {
 
         map = new Map();
         player = new Player(map.getWidth());
-        floor = new Floor();
+        floor = new Floor(map.getWidth());
 
         for (int i = 0; i < numberOfRocks; i++) {
 
@@ -35,7 +35,7 @@ class Game {
 
         }
 
-        victoryPosX = 950;
+        victoryPosX = 1650;
         victoryPosY = 300;
         victory = false;
 
@@ -101,9 +101,21 @@ class Game {
     }
 
     private void detectCollision() {
+        for (int i = 0; i < rock.length; i++) {
 
+            /*if ((r.getX() >= player.getX() && r.getX() + r.getWidth() <= player.getX() + player.getWidth() + r.getWidth())
+                    && (r.getY() >= player.getY()) && r.getY() + r.getHeight() >= player.getY() + player.getHeight()) {
+                System.out.println("LOOSER");
+            }*/
 
+            System.out.println(rock[i].getY());
+            System.out.println(rock[i].getHeight());
 
+            if (rock[i].getY()+rock[i].getHeight()== (map.getHeight() - 200)) {
+                System.out.println("123123123");
+            }
+
+        }
     }
 
 
