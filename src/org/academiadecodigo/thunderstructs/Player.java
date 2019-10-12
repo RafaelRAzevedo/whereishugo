@@ -10,20 +10,14 @@ public class Player implements KeyboardHandler {
     private Picture player;
     private int mapWidth;
 
-    private String[] animationSprites = {
-        "sprites/player/player_walk3.png",
-       "sprites/player/player_walk1.png",
-        "sprites/player/player_walk2.png"
-    };
-
     public Player(int mapWidth) {
-        player = new Picture(50, 300, "sprites/player/player_walk3.png");
+        player = new Picture(50, 350, "sprites/player/player_walk3.png");
         this.mapWidth = mapWidth;
     }
 
     public void init() {
         player.draw();
-        player.grow(0,0);
+        player.grow(0, 0);
     }
 
     public int getX() {
@@ -35,7 +29,6 @@ public class Player implements KeyboardHandler {
         return player.getY();
     }
 
-
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
@@ -43,12 +36,10 @@ public class Player implements KeyboardHandler {
                 if (player.getX() < Map.PADDING) {
                     return;
                 }
-                player.translate(-10, 0);
-                player.draw();
+                serMovingLeft();
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if (player.getX() < this.mapWidth - player.getWidth())
-                    movingRightAnimation();
+                setMovingRight();
                 break;
         }
     }
@@ -58,14 +49,21 @@ public class Player implements KeyboardHandler {
 
     }
 
-    public void movingRightAnimation() {
+    public void setMovingRight() {
+        /*Picture[] animationSprites = {new Picture(getX(), getY(), "sprites/player/player_walk3.png"),
+                new Picture(getX(), getY(), "sprites/player/player_walk1.png"),
+                new Picture(getX(), getY(), "sprites/player/player_walk2.png")};
 
-        for (int i = 0; i < 3; i++) {
-            player.delete();
-            player = new Picture(getX(),getY(),animationSprites[i]);
-            player.translate(i*10,0);
-            player.draw();
-        }
+            for (int i = 1; i < 3; i++) {
+                animationSprites[i-1].delete();
+                animationSprites[i].translate(i * 10, 0);
+                animationSprites[i].draw();
+            }*/
+        player.translate(10, 0);
+    }
+
+    public void serMovingLeft(){
+        player.translate(-10,0);
     }
 
 }
