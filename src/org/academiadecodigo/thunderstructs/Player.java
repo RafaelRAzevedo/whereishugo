@@ -39,13 +39,13 @@ public class Player implements KeyboardHandler {
                 if(player.getX() < Map.PADDING){
                     return;
                 }
-                player.translate(-10,0);
-                player.draw();
+                setMovementLeft();
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if(player.getX() > this.mapWidth - player.getWidth())
-                player.translate(10,0);
-                player.draw();
+                if(player.getX() > this.mapWidth - player.getWidth()){
+                    return;
+                }
+                setMovementRight();
                 break;
         }
     }
@@ -53,5 +53,15 @@ public class Player implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
+    }
+
+    private void setMovementLeft(){
+        player.translate(-10,0);
+        player.draw();
+    }
+
+    private void setMovementRight(){
+        player.translate(10,0);
+        player.draw();
     }
 }
