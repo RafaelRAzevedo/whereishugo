@@ -4,11 +4,14 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.thunderstructs.map.Map;
+import org.academiadecodigo.thunderstructs.objects.FallingRock;
 
 class Game {
 
     private Map map;
     private Player player;
+    private FallingRock rock;
+
     private boolean victory;
 
     private int victoryPosX;
@@ -16,8 +19,10 @@ class Game {
 
     Game() {
 
-        player = new Player();
         map = new Map();
+        player = new Player(map.getWidth());
+        rock = new FallingRock(map.getHeight());
+
 
         victoryPosX = 55;
         victoryPosY = 300;
