@@ -10,7 +10,7 @@ class Game {
 
     private Map map;
     private Player player;
-    private int numberOfRocks = 10;
+    private int numberOfRocks = 15;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
 
     private boolean victory;
@@ -96,7 +96,7 @@ class Game {
 
     private void detectCollision() {
 
-
+        if(player.getX())
 
     }
 

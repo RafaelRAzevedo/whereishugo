@@ -9,20 +9,23 @@ public class FallingRock implements Gravity {
     private Picture rock;
     private int posX;
     private int posY;
+    private final int grow = 370;
 
     public FallingRock(int mapHeight, int mapWidth) {
-        posX = (int) (Math.random() * (mapWidth - 430)) + 80;
-        posY = Map.PADDING;
+
+        posX = (int) (Math.random() * (mapWidth - grow - 60));
+        posY = Map.PADDING-grow;
 
         rock = new Picture(posX, posY, "resources/sprites/stone.png");
 
-        rock.grow(-370, -370);
+        rock.grow(-grow, -grow);
 
         this.mapHeight = mapHeight;
     }
 
     public void init() {
         rock.draw();
+        //System.out.println(rock.getWidth());
     }
 
 
