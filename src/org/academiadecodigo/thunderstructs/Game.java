@@ -26,7 +26,7 @@ class Game {
     Game() {
 
         map = new Map();
-        player = new Player(map.getWidth());
+        player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
 
         for (int i = 0; i < numberOfRocks; i++) {
