@@ -37,20 +37,19 @@ class Game {
 
         map.init();
         keyboardEvents();
+        player.init();
 
         while (!victory) {
-
             detectCollision();
             checkVictory();
         }
+
         //TODO: ENDING SCREENS
 
     }
 
 
     private void checkVictory() {
-
-        player.init();
 
         if (player.getX() >= victoryPosX && player.getY() == victoryPosY) {
             System.out.println("WIN");
