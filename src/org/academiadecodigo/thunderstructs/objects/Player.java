@@ -4,7 +4,6 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
-import org.academiadecodigo.thunderstructs.objects.Gravity;
 
 public class Player implements KeyboardHandler, Gravity {
 
@@ -26,6 +25,7 @@ public class Player implements KeyboardHandler, Gravity {
     public void init() {
         player.draw();
         player.grow(0, 0);
+        fall();
     }
 
     public int getX() {
@@ -68,13 +68,12 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     private void setMovementRight() {
-        for (int i = 1; i < sprites.length ; i++) {
+        for (int i = 1; i < sprites.length; i++) {
             player.delete();
-            player = new Picture(getX(),getY(),sprites[i]);
+            player = new Picture(getX(), getY(), sprites[i]);
             player.translate(10, 0);
             player.draw();
         }
-
     }
 
     public int getWidth() {
@@ -85,11 +84,16 @@ public class Player implements KeyboardHandler, Gravity {
         return player.getHeight() - growY;
     }
 
-    public void fall(){
-        if (player.getY() <= mapHeight) {
+    public void fall() {
+
+        while (player.getY() <= (mapHeight - 100)) {
+            try{
+                Thread.sleep(40);
+            }catch (InterruptedException ie){
+                System.out.println(ie);
+            }
             player.translate(0, Gravity.gravity);
-        } else {
-            player.translate(0, - mapHeight);
+            player.draw();
         }
     }
 }
