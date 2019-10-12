@@ -3,39 +3,45 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-public class Floor {
+public class Floor extends Map {
 
     private Picture floorTile;
 
     private int mapWidth;
-    private int mapHeight;
-    private int posX;
-    private int posY;
+    private int cellsize;
 
-    private Floor[] tiles;
+    private Picture[] tiles;
 
-    public Floor(){
-        floorTile = new Picture(Map.PADDING - 100,351,"resources/sprites/blockTexture.png");
-        floorTile.grow(-100,-100);
-    }
-
-    public int getMapHeight() {
-        return mapHeight;
+    public Floor(int mapWidth) {
+        this.mapWidth = mapWidth;
+        floorTile = new Picture(Map.PADDING - 100, 351, "resources/sprites/blockTexture.png");
+        floorTile.grow(-100, -100);
+        cellsize = floorTile.getWidth();
+        tiles = new Picture[33 * cellsize];
     }
 
     public void init() {
         tileFloor();
     }
 
-    public Picture getPicture(){
+    public Picture getPicture() {
         return this.floorTile;
     }
 
     public void tileFloor() {
-        //for (int i = 0; i > -1; i++){
-            floorTile.draw();
-        //}
 
-
+        System.out.println(cellsize);
+        for (int i = 0; i < mapWidth; i += cellsize) {
+            //tiles[i] = floorTile;
+            tiles[i] = new Picture(i - 90, 351, "resources/sprites/blockTexture.png");
+            tiles[i].grow(-100, -100);
+            tiles[i].draw();
+            //System.out.println(floorTile.getY());
+        }
+        //floorTile.translate(20,0);
+        //floorTile.draw();floorTile.draw();
     }
+
+
 }
+
