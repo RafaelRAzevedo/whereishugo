@@ -10,7 +10,8 @@ class Game {
 
     private Map map;
     private Player player;
-    private FallingRock rock;
+    private int numberOfRocks = 10;
+    private FallingRock[] rock = new FallingRock[numberOfRocks];
 
     private boolean victory;
 
@@ -21,11 +22,15 @@ class Game {
 
         map = new Map();
         player = new Player(map.getWidth());
-        rock = new FallingRock(map.getHeight(), map.getWidth());
-        //rock.fall();
+
+        for (int i = 0; i < numberOfRocks; i++) {
+
+            rock[i] = new FallingRock(map.getHeight(), map.getWidth());
 
 
-        victoryPosX = 55;
+        }
+
+        victoryPosX = 950;
         victoryPosY = 300;
         victory = false;
 
@@ -38,10 +43,23 @@ class Game {
         map.init();
         keyboardEvents();
         player.init();
+        for (FallingRock r : rock) {
+            r.init();
+        }
 
         while (!victory) {
+            int number = (int) (Math.random() * numberOfRocks);
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ie) {
+                System.out.println(ie);
+            }
+
+            rock[number].fall();
             detectCollision();
             checkVictory();
+
         }
 
         //TODO: ENDING SCREENS
@@ -78,8 +96,9 @@ class Game {
 
     private void detectCollision() {
 
-    }
 
+
+    }
 
 
     private void setVictory() {
