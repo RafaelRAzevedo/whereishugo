@@ -6,5 +6,5 @@ interface Gravity {
     int terminalVelocity = 300;
     int verticalPosition = 0;
 
-    void fall(int position);
+    void fall();
 }

@@ -21,7 +21,8 @@ class Game {
 
         map = new Map();
         player = new Player(map.getWidth());
-        rock = new FallingRock(map.getHeight());
+        rock = new FallingRock(map.getHeight(), map.getWidth());
+        //rock.fall();
 
 
         victoryPosX = 55;
@@ -38,6 +39,7 @@ class Game {
         keyboardEvents();
 
         while (!victory) {
+
             detectCollision();
             checkVictory();
         }

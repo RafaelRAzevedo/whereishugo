@@ -14,14 +14,14 @@ public class FallingRock implements Gravity {
         posX = Map.PADDING;
         posY = (int) (Math.random() * mapWidth);
 
-        rock = new Picture(posX, posY, "resources/block_sprite.png");
+        rock = new Picture(posX, posY, "resources/sprites/blockTexture.png");
         rock.draw();
 
         this.mapHeight = mapHeight;
     }
 
     @Override
-    public void fall(int position) {
+    public void fall() {
 
         while (posY != mapHeight) {
             rock.translate(0, Gravity.gravity);
