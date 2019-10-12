@@ -1,11 +1,31 @@
 package org.academiadecodigo.thunderstructs.objects;
 
-public class FallingRock {
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.thunderstructs.map.Map;
+
+public class FallingRock implements Gravity {
 
     private int mapHeight;
+    private Picture rock;
+    private int posX;
+    private int posY;
 
-    public FallingRock(int mapHeight) {
+    public FallingRock(int mapHeight, int mapWidth) {
+        posX = Map.PADDING;
+        posY = (int) (Math.random() * mapWidth);
+
+        rock = new Picture(posX, posY, "resources/sprites/blockTexture.png");
+        rock.draw();
+
         this.mapHeight = mapHeight;
     }
 
+    @Override
+    public void fall() {
+
+        while (posY != mapHeight) {
+            rock.translate(0, Gravity.gravity);
+        }
+
+    }
 }
