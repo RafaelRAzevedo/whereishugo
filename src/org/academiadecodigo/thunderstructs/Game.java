@@ -5,6 +5,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
+import org.academiadecodigo.thunderstructs.objects.Floor;
 
 class Game {
 
@@ -12,6 +13,9 @@ class Game {
     private Player player;
     private int numberOfRocks = 10;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
+
+    private Floor floor;
+
 
     private boolean victory;
 
@@ -22,6 +26,7 @@ class Game {
 
         map = new Map();
         player = new Player(map.getWidth());
+        floor = new Floor();
 
         for (int i = 0; i < numberOfRocks; i++) {
 
@@ -41,6 +46,7 @@ class Game {
         //TODO: WELCOME SCREENS
 
         map.init();
+        floor.init();
         keyboardEvents();
         player.init();
         for (FallingRock r : rock) {
