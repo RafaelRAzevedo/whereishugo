@@ -10,9 +10,14 @@ public class Player implements KeyboardHandler {
     private Picture player;
     private int mapWidth;
 
+    private String[] animationSprites = {
+        "sprites/player/player_walk3.png",
+       "sprites/player/player_walk1.png",
+        "sprites/player/player_walk2.png"
+    };
 
     public Player(int mapWidth) {
-        player = new Picture(50,300,"sprites/player/player_idle.png");
+        player = new Picture(50, 300, "sprites/player/player_walk3.png");
         this.mapWidth = mapWidth;
     }
 
@@ -21,31 +26,29 @@ public class Player implements KeyboardHandler {
         player.grow(0,0);
     }
 
-    public int getX(){
+    public int getX() {
 
         return player.getX();
     }
 
-    public int getY(){
-
+    public int getY() {
         return player.getY();
     }
 
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        switch (keyboardEvent.getKey()){
+        switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                if(player.getX() < Map.PADDING){
+                if (player.getX() < Map.PADDING) {
                     return;
                 }
-                player.translate(-10,0);
+                player.translate(-10, 0);
                 player.draw();
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if(player.getX() < this.mapWidth - player.getWidth())
-                player.translate(10,0);
-                player.draw();
+                if (player.getX() < this.mapWidth - player.getWidth())
+                    movingRightAnimation();
                 break;
         }
     }
@@ -54,4 +57,15 @@ public class Player implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
+
+    public void movingRightAnimation() {
+
+        for (int i = 0; i < 3; i++) {
+            player.delete();
+            player = new Picture(getX(),getY(),animationSprites[i]);
+            player.translate(i*10,0);
+            player.draw();
+        }
+    }
+
 }
