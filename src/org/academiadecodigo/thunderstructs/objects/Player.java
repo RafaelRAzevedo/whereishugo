@@ -14,7 +14,8 @@ public class Player implements KeyboardHandler, Gravity {
     private int growY = 0;
     private String[] sprites = {"sprites/player/player_idle.png",
             "sprites/player/player_walk1.png",
-            "sprites/player/player_walk2.png"};
+            "sprites/player/player_walk2.png",
+            "sprites/player/player_idle.png"};
 
     public Player(int mapWidth, int mapHeight) {
         player = new Picture(50, 300, "sprites/player/player_idle.png");
@@ -68,7 +69,7 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     private void setMovementRight() {
-        for (int i = 1; i < sprites.length; i++) {
+        for (int i = 0; i < sprites.length; i++) {
             player.delete();
             player = new Picture(getX(), getY(), sprites[i]);
             player.translate(10, 0);
@@ -86,14 +87,15 @@ public class Player implements KeyboardHandler, Gravity {
 
     public void fall() {
 
-        while (player.getY() <= (mapHeight - 100)) {
-            try{
+        while (player.getY() <= (mapHeight - 170)) {
+            try {
                 Thread.sleep(40);
-            }catch (InterruptedException ie){
+            } catch (InterruptedException ie) {
                 System.out.println(ie);
             }
             player.translate(0, Gravity.gravity);
             player.draw();
         }
     }
+
 }
