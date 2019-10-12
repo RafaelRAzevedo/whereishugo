@@ -9,7 +9,8 @@ public class Player implements KeyboardHandler {
 
     private Picture player;
     private int mapWidth;
-
+    private int growX = 0;
+    private int growY = 0;
 
     public Player(int mapWidth) {
         player = new Picture(50,300,"sprites/player/player_idle.png");
@@ -63,5 +64,13 @@ public class Player implements KeyboardHandler {
     private void setMovementRight(){
         player.translate(10,0);
         player.draw();
+    }
+
+    public int getWidth(){
+        return player.getWidth()-growX;
+    }
+
+    public int getHeight(){
+        return player.getHeight() - growY;
     }
 }
