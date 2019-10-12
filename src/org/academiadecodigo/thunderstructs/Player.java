@@ -43,7 +43,7 @@ public class Player implements KeyboardHandler {
                 player.draw();
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if(player.getX() > this.mapWidth - player.getWidth())
+                if(player.getX() < this.mapWidth - player.getWidth())
                 player.translate(10,0);
                 player.draw();
                 break;
