@@ -1,9 +1,8 @@
 package org.academiadecodigo.thunderstructs.objects;
-
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-public class FallingRock implements Gravity {
+public class FallingRock implements Gravity{
 
     private int mapHeight;
     private Picture rock;

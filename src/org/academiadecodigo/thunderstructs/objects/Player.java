@@ -1,23 +1,26 @@
-package org.academiadecodigo.thunderstructs;
+package org.academiadecodigo.thunderstructs.objects;
 
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
+import org.academiadecodigo.thunderstructs.objects.Gravity;
 
-public class Player implements KeyboardHandler {
+public class Player implements KeyboardHandler, Gravity {
 
     private Picture player;
     private int mapWidth;
+    private int mapHeight;
     private int growX = 0;
     private int growY = 0;
     private String[] sprites = {"sprites/player/player_idle.png",
             "sprites/player/player_walk1.png",
             "sprites/player/player_walk2.png"};
 
-    public Player(int mapWidth) {
+    public Player(int mapWidth, int mapHeight) {
         player = new Picture(50, 300, "sprites/player/player_idle.png");
         this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
     }
 
     public void init() {
@@ -70,9 +73,6 @@ public class Player implements KeyboardHandler {
             player = new Picture(getX(),getY(),sprites[i]);
             player.translate(10, 0);
             player.draw();
-            try {
-                Thread.sleep(10);
-            }
         }
 
     }
@@ -83,5 +83,13 @@ public class Player implements KeyboardHandler {
 
     public int getHeight() {
         return player.getHeight() - growY;
+    }
+
+    public void fall(){
+        if (player.getY() <= mapHeight) {
+            player.translate(0, Gravity.gravity);
+        } else {
+            player.translate(0, - mapHeight);
+        }
     }
 }
