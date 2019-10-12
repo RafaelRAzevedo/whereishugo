@@ -46,9 +46,10 @@ class Game {
         //TODO: WELCOME SCREENS
 
         map.init();
-        floor.init();
-        keyboardEvents();
         player.init();
+        floor.init();
+
+        keyboardEvents();
         for (FallingRock r : rock) {
             r.init();
         }
@@ -103,14 +104,6 @@ class Game {
 
     private void detectCollision() {
         for (int i = 0; i < rock.length; i++) {
-
-            /*if ((r.getX() >= player.getX() && r.getX() + r.getWidth() <= player.getX() + player.getWidth() + r.getWidth())
-                    && (r.getY() >= player.getY()) && r.getY() + r.getHeight() >= player.getY() + player.getHeight()) {
-                System.out.println("LOOSER");
-            }*/
-
-            System.out.println(rock[i].getY());
-            System.out.println(rock[i].getHeight());
 
             if (rock[i].getY()+rock[i].getHeight()== (map.getHeight() - 200)) {
                 System.out.println("123123123");
