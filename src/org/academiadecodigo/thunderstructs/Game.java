@@ -38,7 +38,6 @@ class Game {
         victoryPosX = 1650;
         victoryPosY = 300;
         victory = false;
-
     }
 
     void start() {
@@ -65,6 +64,7 @@ class Game {
             rock[number].fall();
             detectCollision();
             checkVictory();
+            floor.openTile();
 
         }
 
