@@ -66,7 +66,10 @@ class Game {
             rock[number].fall();
             detectCollision();
             checkVictory();
-            floor.openTile();
+            if(Math.random() > 0.99) {
+                floor.openTile();
+            }
+
 
         }
 
