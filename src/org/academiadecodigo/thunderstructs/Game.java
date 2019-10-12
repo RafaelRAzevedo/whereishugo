@@ -21,7 +21,8 @@ class Game {
 
         map = new Map();
         player = new Player(map.getWidth());
-        rock = new FallingRock(map.getHeight());
+        rock = new FallingRock(map.getHeight(), map.getWidth());
+        //rock.fall();
 
 
         victoryPosX = 55;
@@ -36,19 +37,19 @@ class Game {
 
         map.init();
         keyboardEvents();
+        player.init();
 
         while (!victory) {
             detectCollision();
             checkVictory();
         }
+
         //TODO: ENDING SCREENS
 
     }
 
 
     private void checkVictory() {
-
-        player.init();
 
         if (player.getX() >= victoryPosX && player.getY() == victoryPosY) {
             System.out.println("WIN");
