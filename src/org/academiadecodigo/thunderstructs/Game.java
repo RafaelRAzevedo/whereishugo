@@ -20,9 +20,15 @@ class Game {
 
     private boolean victory;
     private boolean defeat;
+    private boolean isTrapOpen;
 
     private int victoryPosX;
     private int victoryPosY;
+
+    //time counter
+    private int seconds;
+    private int lastSecond = 0;
+    private final long createdMillis = System.currentTimeMillis();
 
     Picture[] floorBlocks;
     private Boolean[] isTilesDraw;
@@ -32,7 +38,6 @@ class Game {
         map = new Map();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
-
 
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
@@ -62,12 +67,6 @@ class Game {
             isTilesDraw[i] = true;
         }
 
-        floorBlocks[5].delete();
-        isTilesDraw[5] = false;
-
-        floorBlocks[6].delete();
-        isTilesDraw[6] = false;
-
         player.init();
 
         keyboardEvents();
@@ -90,11 +89,13 @@ class Game {
             if (Math.random() > 0.99) {
                 floor.openTile();
             }
+
+            getAgeInSeconds();
         }
 
         if (defeat) {
-             System.out.println("wasted");
-             //break;
+            System.out.println("wasted");
+            //break;
             return;
         }
 
@@ -116,39 +117,46 @@ class Game {
 
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
+        KeyboardEvent space = new KeyboardEvent();
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        // space.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
         left.setKey(KeyboardEvent.KEY_LEFT);
         right.setKey(KeyboardEvent.KEY_RIGHT);
+        space.setKey(KeyboardEvent.KEY_SPACE);
 
         keyboard.addEventListener(left);
         keyboard.addEventListener(right);
+        keyboard.addEventListener(space);
     }
 
     private void detectCollision() {
         for (int i = 0; i < rock.length; i++) {
             if ((player.getX() >= rock[i].getX())
                     && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
-             //   System.out.println(rock[i].getY());
+                //   System.out.println(rock[i].getY());
                 if (player.getY() <= rock[i].getY() + rock[i].getHeight()) {
                     setDefeat();
-                    System.out.println("wasted");
                 }
             }
         }
-        for (int i = 0; i < floorBlocks.length; i++) {
-            if ((player.getX() >= floorBlocks[i].getX())) {
-                if(!isTilesDraw[i]) {
-                    System.out.println("cair");
+        for (int i = 0; i < floorBlocks.length - 1; i++) {
+            // if ((player.getX() >= floorBlocks[i].getX())) {
+            if (player.getX() > floorBlocks[i].getX() && (player.getX() < floorBlocks[i].getX()+floorBlocks[i].getWidth())) {
+                if (!isTilesDraw[i]) {
+                    //System.out.println("cair");
+                    player.setHitFloor(false);
                     player.gravity();
-                   // player.fall();
+                    player.fall();
                 }
+                player.setHitFloor(true);
             }
         }
-        if(player.getY()+player.getHeight()>= map.getHeight()){
-            System.out.println("Dead");
+        if (player.getY() + player.getHeight() >= map.getHeight()) {
+            //System.out.println("Dead");
             defeat = true;
         }
     }
@@ -160,6 +168,28 @@ class Game {
 
     private void setVictory() {
         victory = true;
+    }
+
+    public void getAgeInSeconds() {
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int)((nowMillis - this.createdMillis) / 1000);
+
+        if(seconds == lastSecond){
+            return;
+        }
+
+        if(seconds % 4 == 0){
+            floorBlocks[5].draw();
+            isTilesDraw[5] = true;
+            floorBlocks[6].draw();
+            isTilesDraw[6] = true;
+        }
+        else{
+            floorBlocks[5].delete();
+            isTilesDraw[5] = false;
+            floorBlocks[6].delete();
+            isTilesDraw[6] = false;
+        }
     }
 
 }

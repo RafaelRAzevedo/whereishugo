@@ -14,13 +14,14 @@ public class Player implements KeyboardHandler, Gravity {
     private int growY = 0;
     private boolean hitFloor;
 
-    private String[] sprites = {"sprites/player/player_idle.png",
+    private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
             "sprites/player/player_walk2.png",
-            "sprites/player/player_idle.png"};
+            "sprites/player/player_idle.png",};
+    //"sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 341, "sprites/player/player_idle.png");
+        player = new Picture(50, 355, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
     }
@@ -29,7 +30,6 @@ public class Player implements KeyboardHandler, Gravity {
         player.draw();
         player.grow(0, 0);
         fall();
-        // animation("FALLING");
     }
 
     public int getX() {
@@ -57,6 +57,9 @@ public class Player implements KeyboardHandler, Gravity {
                 }
                 setMovementRight();
                 break;
+            case KeyboardEvent.KEY_SPACE:
+                setMovementUp();
+                break;
         }
     }
 
@@ -77,8 +80,24 @@ public class Player implements KeyboardHandler, Gravity {
         player.draw();
     }
 
+    private void setMovementUp() {
+        int maxHeithJump = 100;
+        int initialY = player.getY();
+        System.out.println("Jumping");
+        while (player.getY() < initialY) {
+            System.out.println(player.getY());
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException ie) {
+                System.out.println(ie);
+            }
+            player.translate(getX(), gravity - 15);
+            player.draw();
+        }
+    }
+
     public int getWidth() {
-        return player.getWidth() - growX;
+        return player.getWidth();
     }
 
     public int getHeight() {
@@ -89,7 +108,7 @@ public class Player implements KeyboardHandler, Gravity {
         //while (player.getY() + player.getHeight() <= mapHeight - 50) {//58 is tile height
         while (hitFloor) {
             // if((player.getY()+player.getHeight())
-            System.out.println("não cai");
+            //System.out.println("não cai");
             try {
                 Thread.sleep(20);
             } catch (InterruptedException ie) {
@@ -121,7 +140,7 @@ public class Player implements KeyboardHandler, Gravity {
         this.hitFloor = hitFloor;
     }
 
-    public void gravity(){
+    public void gravity() {
         player.translate(0, Gravity.gravity);
     }
 }
