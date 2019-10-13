@@ -143,4 +143,8 @@ public class Player implements KeyboardHandler, Gravity {
     public void gravity() {
         player.translate(0, Gravity.gravity);
     }
+
+    public Picture getPlayer(){
+        return player;
+    }
 }

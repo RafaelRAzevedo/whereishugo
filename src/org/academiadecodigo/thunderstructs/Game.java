@@ -13,7 +13,7 @@ class Game {
 
     private Map map;
     private Player player;
-    private int numberOfRocks = 15;
+    private int numberOfRocks = 10;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
 
     private Floor floor;
@@ -31,6 +31,8 @@ class Game {
     private final long createdMillis = System.currentTimeMillis();
 
     Picture[] floorBlocks;
+    Picture[] lavaBlock;
+
     private Boolean[] isTilesDraw;
 
     Game() {
@@ -58,17 +60,28 @@ class Game {
 
         //implementação do array de floor blocks no game em vez da Class Floor
         floorBlocks = new Picture[floor.getTiles().length];
+
+        //Verifição se o chão está draw() ou delete()
         isTilesDraw = new Boolean[floor.getTiles().length];
 
+        lavaBlock = new Picture[floor.getTiles().length];
+
         for (int i = 0; i < floor.getTiles().length; i++) {
+            //what the fuck is this?! : i * floor.getTileSize() - (100 - 100 / 10)
             floorBlocks[i] = new Picture(i * floor.getTileSize() - (100 - 100 / 10), 351, "resources/sprites/blockTexture.png");
             floorBlocks[i].grow(-100, -100);
             floorBlocks[i].draw();
             isTilesDraw[i] = true;
         }
 
-        player.init();
+        for (int i = 0; i < floor.getTiles().length; i++) {
+            lavaBlock[i] = new Picture(i * floor.getTileSize() - (100 - 100 / 10), 400, "resources/sprites/lava_sprite.png");
+            lavaBlock[i].grow(-100, -100);
+            lavaBlock[i].draw();
+        }
 
+
+        player.init();
         keyboardEvents();
         for (FallingRock r : rock) {
             r.init();
@@ -90,14 +103,17 @@ class Game {
                 floor.openTile();
             }
 
-            getAgeInSeconds();
+            getAnimation
+                    ();
+
+            if (defeat) {
+                System.out.println("wasted");
+
+                return;
+            }
         }
 
-        if (defeat) {
-            System.out.println("wasted");
-            //break;
-            return;
-        }
+
 
     }
 
@@ -137,17 +153,16 @@ class Game {
         for (int i = 0; i < rock.length; i++) {
             if ((player.getX() >= rock[i].getX())
                     && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
-                //   System.out.println(rock[i].getY());
                 if (player.getY() <= rock[i].getY() + rock[i].getHeight()) {
+                    System.out.println("hit");
                     setDefeat();
                 }
             }
         }
+
         for (int i = 0; i < floorBlocks.length - 1; i++) {
-            // if ((player.getX() >= floorBlocks[i].getX())) {
             if (player.getX() > floorBlocks[i].getX() && (player.getX() < floorBlocks[i].getX()+floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
-                    //System.out.println("cair");
                     player.setHitFloor(false);
                     player.gravity();
                     player.fall();
@@ -155,8 +170,9 @@ class Game {
                 player.setHitFloor(true);
             }
         }
+
         if (player.getY() + player.getHeight() >= map.getHeight()) {
-            //System.out.println("Dead");
+            player.getPlayer().delete();
             defeat = true;
         }
     }
@@ -170,26 +186,33 @@ class Game {
         victory = true;
     }
 
-    public void getAgeInSeconds() {
+    public void getAnimation() {
         long nowMillis = System.currentTimeMillis();
         seconds = (int)((nowMillis - this.createdMillis) / 1000);
-
         if(seconds == lastSecond){
             return;
         }
-
-        if(seconds % 4 == 0){
+        if(seconds % 2 == 0){
             floorBlocks[5].draw();
             isTilesDraw[5] = true;
             floorBlocks[6].draw();
             isTilesDraw[6] = true;
+           /* for (int i = 0; i < floor.getTiles().length ; i++) {
+                lavaBlock[i].translate(0.1, 0);
+                lavaBlock[i].draw();
+            }*/
         }
         else{
             floorBlocks[5].delete();
             isTilesDraw[5] = false;
             floorBlocks[6].delete();
             isTilesDraw[6] = false;
+          /*  for (int i = 0; i < floor.getTiles().length ; i++) {
+                lavaBlock[i].translate(-0.1, 0);
+                lavaBlock[i].draw();
+            }*/
         }
+
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class Floor extends Map {
 
     private Picture floorTile;
+    private Picture lava;
 
     private int mapWidth;
     private int tileSize;
@@ -15,14 +16,14 @@ public class Floor extends Map {
     private int pos1X;
     private int pos2X;
 
-    private boolean floorDeleted;
+    //private boolean floorDeleted;
 
 
     private Picture[] tiles;
     private Boolean[] isTilesDraw;
 
     public Floor(int mapWidth) {
-        floorDeleted = false;
+      //  floorDeleted = false;
 
         this.mapWidth = mapWidth;
         grow = 100;
@@ -78,10 +79,6 @@ public class Floor extends Map {
 
     public int getTileSize() {
         return tileSize;
-    }
-
-    public boolean isFloorDeleted() {
-        return floorDeleted;
     }
 
     public Picture[] getTiles() {
