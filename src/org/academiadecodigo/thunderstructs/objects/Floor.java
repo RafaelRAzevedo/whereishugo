@@ -3,6 +3,8 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
+import java.util.Arrays;
+
 public class Floor extends Map {
 
     private Picture floorTile;
@@ -17,44 +19,44 @@ public class Floor extends Map {
 
 
     private Picture[] tiles;
+    private Boolean[] isTilesDraw;
 
     public Floor(int mapWidth) {
         floorDeleted = false;
 
         this.mapWidth = mapWidth;
         grow = 100;
-
         floorTile = new Picture(Map.PADDING - 100, 351, "resources/sprites/blockTexture.png");
         floorTile.grow(-grow, -grow);
-
         tileSize = floorTile.getWidth();
-
         tiles = new Picture[mapWidth / tileSize + 1];
-
+        isTilesDraw = new Boolean[tiles.length];
     }
 
     public void init() {
-        for (int i = 0; i < tiles.length; i++) {
+       /* for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Picture(i * tileSize - (grow - grow / 10), 351, "resources/sprites/blockTexture.png");
             tiles[i].grow(-grow, -grow);
             tiles[i].draw();
-        }
+            isTilesDraw[i] = true;
+        }*/
     }
-
 
     public void openTile() {
 
         //System.out.println(tiles[5]);
 
-        if (!floorDeleted) {
+        /*if (!floorDeleted) {
 
             pos1X = tiles[5].getX();
             pos2X = tiles[6].getX();
 
             tiles[5].delete();
+            isTilesDraw[5] = false;
             tiles[6].delete();
+            isTilesDraw[5] = false;
 
-            System.out.println("DELETED");
+           // System.out.println("DELETED");
             floorDeleted = true;
 
         } else {
@@ -65,12 +67,13 @@ public class Floor extends Map {
             tiles[6].grow(-grow, -grow);
 
             tiles[5].draw();
+            isTilesDraw[5] = true;
             tiles[6].draw();
-            System.out.println("CREATED");
+            isTilesDraw[6] = true;
+
+           // System.out.println("CREATED");
             floorDeleted = false;
-
-        }
-
+        }*/
     }
 
     public int getTileSize() {
@@ -83,6 +86,10 @@ public class Floor extends Map {
 
     public Picture[] getTiles() {
         return tiles;
+    }
+
+    public Boolean[] getIsTilesDraw(){
+        return isTilesDraw;
     }
 
 }

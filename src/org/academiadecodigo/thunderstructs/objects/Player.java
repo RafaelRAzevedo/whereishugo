@@ -1,6 +1,5 @@
 package org.academiadecodigo.thunderstructs.objects;
 
-import com.sun.source.tree.CompoundAssignmentTree;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -13,6 +12,7 @@ public class Player implements KeyboardHandler, Gravity {
     private int mapHeight;
     private int growX = 0;
     private int growY = 0;
+    private boolean hitFloor;
 
     private String[] sprites = {"sprites/player/player_idle.png",
             "sprites/player/player_walk1.png",
@@ -20,7 +20,7 @@ public class Player implements KeyboardHandler, Gravity {
             "sprites/player/player_idle.png"};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 100, "sprites/player/player_idle.png");
+        player = new Picture(50, 341, "sprites/player/player_idle.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
     }
@@ -29,7 +29,7 @@ public class Player implements KeyboardHandler, Gravity {
         player.draw();
         player.grow(0, 0);
         fall();
-        animation();
+        // animation("FALLING");
     }
 
     public int getX() {
@@ -73,8 +73,8 @@ public class Player implements KeyboardHandler, Gravity {
 
     private void setMovementRight() {
 
-            player.translate(10, 0);
-            player.draw();
+        player.translate(10, 0);
+        player.draw();
     }
 
     public int getWidth() {
@@ -86,24 +86,42 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     public void fall() {
+        //while (player.getY() + player.getHeight() <= mapHeight - 50) {//58 is tile height
+        while (hitFloor) {
+            // if((player.getY()+player.getHeight())
+            System.out.println("não cai");
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException ie) {
+                System.out.println(ie);
+            }
 
-        while (player.getY() <= (mapHeight - 170)) {
-            animation();
-            player.translate(0, Gravity.gravity);
+            animation("FALLING");
+
             player.draw();
+        }
+        animation("IDLE");
+        player.draw();
+    }
+
+    public void animation(String animation) {
+        switch (animation) {
+            case "FALLING":
+                player.delete();
+                player = new Picture(getX(), getY(), "sprites/player/player_cheer2.png");
+                break;
+            case "IDLE":
+                player.delete();
+                player = new Picture(getX(), getY(), sprites[0]);
+                break;
         }
     }
 
-    public void animation(){
-        for (int i = 0; i < sprites.length; i++) {
-            try{
-                Thread.sleep(20);
-            }catch (InterruptedException ie){
-                System.out.println(ie);
-            }
-            player.delete();
-            player = new Picture(getX(), getY(), sprites[i]);
-            player.draw();
-        }
+    public void setHitFloor(boolean hitFloor) {
+        this.hitFloor = hitFloor;
+    }
+
+    public void gravity(){
+        player.translate(0, Gravity.gravity);
     }
 }

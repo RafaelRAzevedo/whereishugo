@@ -32,8 +32,10 @@ public class FallingRock implements Gravity{
     public void fall() {
         if (rock.getY() <= mapHeight - rock.getHeight()-59) {
             rock.translate(0, Gravity.gravity);
+            posY += Gravity.gravity;
         } else {
             rock.translate(0, -mapHeight+rock.getHeight());
+            posY = Map.PADDING;
         }
 
 
