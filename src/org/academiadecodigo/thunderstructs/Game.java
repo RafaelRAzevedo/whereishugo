@@ -48,7 +48,6 @@ class Game {
 
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
-            //System.out.println(floorBlocks[i]);
         }
 
         victoryPosX = 1650;
@@ -228,22 +227,16 @@ class Game {
         if(timeCounter() % 2 == 0){
             floorBlocks[5].draw();
             isTilesDraw[5] = true;
-            floorBlocks[6].draw();
-            isTilesDraw[6] = true;
         }
         else{
             floorBlocks[5].delete();
             isTilesDraw[5] = false;
-            floorBlocks[6].delete();
-            isTilesDraw[6] = false;
-
         }
 
     }
 
     public int timeCounter(){
         int seconds;
-        int lastSecond = 0;
 
         long nowMillis = System.currentTimeMillis();
         seconds = (int)((nowMillis - this.createdMillis) / 2000);

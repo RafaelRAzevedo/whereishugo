@@ -3,8 +3,6 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-import java.util.Arrays;
-
 public class Floor extends Map {
 
     private Picture floorTile;
