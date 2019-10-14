@@ -5,7 +5,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-public class Player implements KeyboardHandler, Gravity {
+public class Player implements KeyboardHandler {
 
     private Picture player;
     private int mapWidth;
@@ -17,6 +17,7 @@ public class Player implements KeyboardHandler, Gravity {
     private int velocityX;
     private int velocityY;
     private boolean left, right, up, jump;
+    private long createdMillis;
 
     private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
@@ -35,12 +36,11 @@ public class Player implements KeyboardHandler, Gravity {
     public void init() {
         player.draw();
         player.grow(0, 0);
-        fall();
     }
 
     public int getX() {
-
-        return player.getX();
+        int x = player.getX() + 5;
+        return x;
     }
 
     public int getY() {
@@ -79,6 +79,11 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     public void checkPlayerMovement() {
+        if (up && !jump) {
+            velocityY = -25;
+            jump = true;
+        }
+
         if (left && !right) {
             velocityX = -5;
         }
@@ -91,18 +96,16 @@ public class Player implements KeyboardHandler, Gravity {
             velocityX = 0;
         }
 
-        if (up && !jump) {
-            velocityY = -25;
-            jump = true;
-        }
-
         velocityY *= 0.90;
 
 
         if (velocityY == 0 && jump) {
-            velocityY = 25;
-            velocityY *= 0.90;
-            jump = false;
+
+                velocityY = 25;
+                velocityY *= 0.90;
+            System.out.println(velocityX);
+                jump = false;
+
         }
 
         player.translate(velocityX, velocityY);
@@ -110,30 +113,11 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     public int getWidth() {
-        return player.getWidth();
+        return player.getWidth()-3;
     }
 
     public int getHeight() {
         return player.getHeight() - growY;
-    }
-
-    public void fall() {
-        //while (player.getY() + player.getHeight() <= mapHeight - 50) {//58 is tile height
-        while (hitFloor) {
-            // if((player.getY()+player.getHeight())
-            //System.out.println("não cai");
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException ie) {
-                System.out.println(ie);
-            }
-
-            animation("FALLING");
-
-            player.draw();
-        }
-        animation("IDLE");
-        player.draw();
     }
 
     public void animation(String animation) {
@@ -160,4 +144,6 @@ public class Player implements KeyboardHandler, Gravity {
     public Picture getPlayer() {
         return player;
     }
+
+
 }

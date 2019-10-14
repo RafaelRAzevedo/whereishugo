@@ -25,6 +25,10 @@ class Game {
     private int victoryPosX;
     private int victoryPosY;
 
+    //GameOver Position
+    private int centerX;
+    private int centerY;
+
     //time counter
     private final long createdMillis = System.currentTimeMillis();
 
@@ -39,6 +43,8 @@ class Game {
         map = new Map();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
+        centerX = map.getWidth()/2;
+        centerY = map.getHeight()/2;
 
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
@@ -73,7 +79,7 @@ class Game {
 
         while (!victory) {
             int number = (int) (Math.random() * numberOfRocks);
-
+            detectCollision();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ie) {
@@ -81,7 +87,7 @@ class Game {
             }
 
             rock[number].fall();
-            detectCollision();
+
             checkVictory();
             if (Math.random() > 0.99) {
                 floor.openTile();
@@ -91,8 +97,8 @@ class Game {
             player.checkPlayerMovement();
 
             if (defeat) {
-                System.out.println("wasted");
-
+                Picture gameOver = new Picture(centerX-250,centerY-150,"sprites/gameOver.png");
+                gameOver.draw();
                 return;
             }
         }
@@ -184,13 +190,12 @@ class Game {
         }
 
         //Tiles
-        System.out.println(player.getWidth());
         for (int i = 0; i < floorBlocks.length - 1; i++) {
-            if (player.getX() > floorBlocks[i].getX() && (player.getX()+player.getWidth() < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
+            if (player.getX() > floorBlocks[i].getX() && (player.getX()+player.getWidth()-5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
                     player.setHitFloor(false);
                     player.gravity();
-                    player.fall();
+                    continue;
                 }
                 player.setHitFloor(true);
             }
@@ -220,35 +225,29 @@ class Game {
     }
 
     public void getAnimation() {
-        int seconds;
-        int lastSecond = 0;
 
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int)((nowMillis - this.createdMillis) / 1000);
-        if(seconds == lastSecond){
-            return;
-        }
-        if(seconds % 2 == 0){
+        if(timeCounter() % 2 == 0){
             floorBlocks[5].draw();
             isTilesDraw[5] = true;
             floorBlocks[6].draw();
             isTilesDraw[6] = true;
-           /* for (int i = 0; i < floor.getTiles().length ; i++) {
-                lavaBlock[i].translate(0.1, 0);
-                lavaBlock[i].draw();
-            }*/
         }
         else{
             floorBlocks[5].delete();
             isTilesDraw[5] = false;
             floorBlocks[6].delete();
             isTilesDraw[6] = false;
-          /*  for (int i = 0; i < floor.getTiles().length ; i++) {
-                lavaBlock[i].translate(-0.1, 0);
-                lavaBlock[i].draw();
-            }*/
+
         }
 
     }
 
+    public int timeCounter(){
+        int seconds;
+        int lastSecond = 0;
+
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int)((nowMillis - this.createdMillis) / 2000);
+        return seconds;
+    }
 }
