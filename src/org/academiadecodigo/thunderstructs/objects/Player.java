@@ -96,50 +96,18 @@ public class Player implements KeyboardHandler, Gravity {
             jump = true;
         }
 
-        velocityY *= 0.9;
-        player.translate(velocityX, velocityY);
-
-       if(velocityY == 0 && jump){
-           velocityY = 25;
-           velocityY *= 0.90;
-           System.out.println(velocityY);
-           player.translate(velocityX,velocityY);
-           jump = false;
-       }
-
-        player.draw();
-
-    }
+        velocityY *= 0.90;
 
 
-    /*private void setMovementLeft() {
-
-        player.translate(-10, 0);
-        player.draw();
-    }
-
-    private void setMovementRight() {
-
-        player.translate(10, 0);
-        player.draw();
-    }
-
-    private void setMovementUp() {
-        int maxHeithJump = 100;
-        int initialY = player.getY();
-        System.out.println("Jumping");
-        while (player.getY() < initialY) {
-            System.out.println(player.getY());
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException ie) {
-                System.out.println(ie);
-            }
-            player.translate(getX(), gravity - 15);
-            player.draw();
+        if (velocityY == 0 && jump) {
+            velocityY = 25;
+            velocityY *= 0.90;
+            jump = false;
         }
-    }*/
 
+        player.translate(velocityX, velocityY);
+        player.draw();
+    }
 
     public int getWidth() {
         return player.getWidth();

@@ -172,6 +172,7 @@ class Game {
     }
 
     private void detectCollision() {
+        //Falling rocks
         for (int i = 0; i < rock.length; i++) {
             if ((player.getX() >= rock[i].getX())
                     && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
@@ -182,8 +183,10 @@ class Game {
             }
         }
 
+        //Tiles
+        System.out.println(player.getWidth());
         for (int i = 0; i < floorBlocks.length - 1; i++) {
-            if (player.getX() > floorBlocks[i].getX() && (player.getX() < floorBlocks[i].getX()+floorBlocks[i].getWidth())) {
+            if (player.getX() > floorBlocks[i].getX() && (player.getX()+player.getWidth() < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
                     player.setHitFloor(false);
                     player.gravity();
