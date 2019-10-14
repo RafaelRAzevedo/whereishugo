@@ -26,14 +26,13 @@ class Game {
     private int victoryPosY;
 
     //time counter
-    private int seconds;
-    private int lastSecond = 0;
     private final long createdMillis = System.currentTimeMillis();
 
-    Picture[] floorBlocks;
-    Picture[] lavaBlock;
+    private Picture[] floorBlocks;
+    private Picture[] lavaBlock;
 
     private Boolean[] isTilesDraw;
+    private boolean start = true;
 
     Game() {
 
@@ -54,10 +53,57 @@ class Game {
 
     void start() {
 
+        keyboardEvents();
+
+/*        while (start) {
+            welcomeScreen();
+        }*/
+
         //TODO: WELCOME SCREENS
         map.init();
         //floor.init();
 
+        drawFloor();
+
+        player.init();
+
+        for (FallingRock r : rock) {
+            r.init();
+        }
+
+        while (!victory) {
+            int number = (int) (Math.random() * numberOfRocks);
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ie) {
+                System.out.println(ie);
+            }
+
+            rock[number].fall();
+            detectCollision();
+            checkVictory();
+            if (Math.random() > 0.99) {
+                floor.openTile();
+            }
+
+            getAnimation();
+
+
+            if (defeat) {
+                System.out.println("wasted");
+
+                return;
+            }
+        }
+
+
+
+    }
+
+    //TODO: ENDING SCREENS
+
+    private void drawFloor(){
         //implementação do array de floor blocks no game em vez da Class Floor
         floorBlocks = new Picture[floor.getTiles().length];
 
@@ -79,45 +125,7 @@ class Game {
             lavaBlock[i].grow(-100, -100);
             lavaBlock[i].draw();
         }
-
-
-        player.init();
-        keyboardEvents();
-        for (FallingRock r : rock) {
-            r.init();
-        }
-
-        while (!victory) {
-            int number = (int) (Math.random() * numberOfRocks);
-
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ie) {
-                System.out.println(ie);
-            }
-
-            rock[number].fall();
-            detectCollision();
-            checkVictory();
-            if (Math.random() > 0.99) {
-                floor.openTile();
-            }
-
-            getAnimation
-                    ();
-
-            if (defeat) {
-                System.out.println("wasted");
-
-                return;
-            }
-        }
-
-
-
     }
-
-    //TODO: ENDING SCREENS
 
     private void checkVictory() {
 
@@ -178,6 +186,10 @@ class Game {
     }
 
     private void welcomeScreen() {
+        Picture welcomeScreen = new Picture(0,0, "resources/sprites/welcome.png");
+
+        welcomeScreen.grow(-100,-200);
+        welcomeScreen.draw();
 
     }
 
@@ -191,6 +203,9 @@ class Game {
     }
 
     public void getAnimation() {
+        int seconds;
+        int lastSecond = 0;
+
         long nowMillis = System.currentTimeMillis();
         seconds = (int)((nowMillis - this.createdMillis) / 1000);
         if(seconds == lastSecond){
