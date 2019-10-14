@@ -8,15 +8,15 @@ public class FallingRock implements Gravity{
     private Picture rock;
     private int posX;
     private int posY;
-    private final int grow = 0;
+    private final int grow;
 
     public FallingRock(int mapHeight, int mapWidth) {
+        grow = 0;
 
-        posX = (int) (Math.random() * (mapWidth - grow - 60));
+        posX = (int) (Math.random() * (mapWidth - grow - 60));  // 60 = Rock's width
         posY = Map.PADDING-grow;
 
         rock = new Picture(posX, posY, "resources/sprites/stone_1.png");
-
         rock.grow(-grow, -grow);
 
         this.mapHeight = mapHeight;
@@ -24,12 +24,12 @@ public class FallingRock implements Gravity{
 
     public void init() {
         rock.draw();
-        //System.out.println(rock.getWidth());
     }
 
 
     @Override
     public void fall() {
+
         if (rock.getY() <= mapHeight - rock.getHeight()-59) {
             rock.translate(0, Gravity.gravity);
             posY += Gravity.gravity;
@@ -37,11 +37,6 @@ public class FallingRock implements Gravity{
             rock.translate(0, -mapHeight+rock.getHeight());
             posY = Map.PADDING;
         }
-
-
-        // while (posY != mapHeight) {
-
-        //}
 
     }
 

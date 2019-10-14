@@ -177,6 +177,10 @@ class Game {
         }
     }
 
+    private void welcomeScreen() {
+
+    }
+
     private void setDefeat() {
         defeat = true;
     }

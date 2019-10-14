@@ -18,9 +18,9 @@ public class Floor extends Map {
 
     //private boolean floorDeleted;
 
-
     private Picture[] tiles;
     private Boolean[] isTilesDraw;
+
 
     public Floor(int mapWidth) {
       //  floorDeleted = false;
