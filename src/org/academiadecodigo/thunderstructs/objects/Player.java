@@ -26,7 +26,7 @@ public class Player implements KeyboardHandler {
     //"sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 355, "sprites/player/player_idle_right.png");
+        player = new Picture(50, 385, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
