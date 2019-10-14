@@ -88,7 +88,7 @@ class Game {
             }
 
             getAnimation();
-
+            player.checkPlayerMovement();
 
             if (defeat) {
                 System.out.println("wasted");
@@ -142,19 +142,33 @@ class Game {
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
+        KeyboardEvent leftRelease = new KeyboardEvent();
+        KeyboardEvent rightRelease = new KeyboardEvent();
+        KeyboardEvent spaceRelease = new KeyboardEvent();
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        // space.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+
+        leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        spaceRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
         left.setKey(KeyboardEvent.KEY_LEFT);
         right.setKey(KeyboardEvent.KEY_RIGHT);
         space.setKey(KeyboardEvent.KEY_SPACE);
 
+        leftRelease.setKey(KeyboardEvent.KEY_LEFT);
+        rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
+        spaceRelease.setKey(KeyboardEvent.KEY_SPACE);
+
         keyboard.addEventListener(left);
         keyboard.addEventListener(right);
         keyboard.addEventListener(space);
+
+        keyboard.addEventListener(leftRelease);
+        keyboard.addEventListener(rightRelease);
+        keyboard.addEventListener(spaceRelease);
     }
 
     private void detectCollision() {

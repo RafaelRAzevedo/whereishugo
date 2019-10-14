@@ -14,6 +14,10 @@ public class Player implements KeyboardHandler, Gravity {
     private int growY = 0;
     private boolean hitFloor;
 
+    private int velocityX;
+    private int velocityY;
+    private boolean left, right, up, jump;
+
     private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
             "sprites/player/player_walk2.png",
@@ -24,6 +28,8 @@ public class Player implements KeyboardHandler, Gravity {
         player = new Picture(50, 355, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+        this.velocityX = 0;
+        this.velocityY = 0;
     }
 
     public void init() {
@@ -46,29 +52,67 @@ public class Player implements KeyboardHandler, Gravity {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                if (player.getX() < Map.PADDING) {
-                    return;
-                }
-                setMovementLeft();
+                left = true;
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if (player.getX() > this.mapWidth - player.getWidth()) {
-                    return;
-                }
-                setMovementRight();
+                right = true;
                 break;
             case KeyboardEvent.KEY_SPACE:
-                setMovementUp();
+                up = true;
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
+        switch (keyboardEvent.getKey()) {
+            case KeyboardEvent.KEY_SPACE:
+                up = false;
+                break;
+            case KeyboardEvent.KEY_LEFT:
+                left = false;
+                break;
+            case KeyboardEvent.KEY_RIGHT:
+                right = false;
+                break;
+        }
+    }
+
+    public void checkPlayerMovement() {
+        if (left && !right) {
+            velocityX = -5;
+        }
+
+        if (!left && right) {
+            velocityX = 5;
+        }
+
+        if (!right && !left) {
+            velocityX = 0;
+        }
+
+        if (up && !jump) {
+            velocityY = -25;
+            jump = true;
+        }
+
+        velocityY *= 0.9;
+        player.translate(velocityX, velocityY);
+
+       if(velocityY == 0 && jump){
+           velocityY = 25;
+           velocityY *= 0.90;
+           System.out.println(velocityY);
+           player.translate(velocityX,velocityY);
+           jump = false;
+       }
+
+        player.draw();
 
     }
 
-    private void setMovementLeft() {
+
+    /*private void setMovementLeft() {
 
         player.translate(-10, 0);
         player.draw();
@@ -94,7 +138,8 @@ public class Player implements KeyboardHandler, Gravity {
             player.translate(getX(), gravity - 15);
             player.draw();
         }
-    }
+    }*/
+
 
     public int getWidth() {
         return player.getWidth();
@@ -144,7 +189,7 @@ public class Player implements KeyboardHandler, Gravity {
         player.translate(0, Gravity.gravity);
     }
 
-    public Picture getPlayer(){
+    public Picture getPlayer() {
         return player;
     }
 }
