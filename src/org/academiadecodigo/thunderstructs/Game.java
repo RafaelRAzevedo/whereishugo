@@ -89,9 +89,6 @@ class Game {
             rock[number].fall();
 
             checkVictory();
-            if (Math.random() > 0.99) {
-                floor.openTile();
-            }
 
             getAnimation();
             player.checkPlayerMovement();
@@ -113,22 +110,24 @@ class Game {
         //implementação do array de floor blocks no game em vez da Class Floor
         floorBlocks = new Picture[floor.getTiles().length];
 
-        //Verifição se o chão está draw() ou delete()
+        //Check if floor is drawn or not.
         isTilesDraw = new Boolean[floor.getTiles().length];
 
         lavaBlock = new Picture[floor.getTiles().length];
 
+        // Floor creation
         for (int i = 0; i < floor.getTiles().length; i++) {
-            //what the fuck is this?! : i * floor.getTileSize() - (100 - 100 / 10)
-            floorBlocks[i] = new Picture(i * floor.getTileSize() - (100 - 100 / 10), 351, "resources/sprites/blockTexture.png");
-            floorBlocks[i].grow(-100, -100);
+
+            floorBlocks[i] = new Picture(i * floor.getTileSize()+Map.PADDING, 450, "resources/sprites/blockTexture.png");
             floorBlocks[i].draw();
             isTilesDraw[i] = true;
         }
 
+
+        // Lava Creation
         for (int i = 0; i < floor.getTiles().length; i++) {
-            lavaBlock[i] = new Picture(i * floor.getTileSize() - (100 - 100 / 10), 400, "resources/sprites/lava_sprite.png");
-            lavaBlock[i].grow(-100, -100);
+
+            lavaBlock[i] = new Picture(i * floor.getTileSize(), 400, "resources/sprites/lava_sprite.png");
             lavaBlock[i].draw();
         }
     }
