@@ -1,8 +1,9 @@
 package org.academiadecodigo.thunderstructs.objects;
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-public class FallingRock implements Gravity{
+public class FallingRock implements Gravity {
 
     private int mapHeight;
     private Picture rock;
@@ -13,8 +14,8 @@ public class FallingRock implements Gravity{
     public FallingRock(int mapHeight, int mapWidth) {
         grow = 0;
 
-        posX = (int) (Math.random() * (mapWidth - (grow + 60)));  // 60 = Rock's width
-        posY = Map.PADDING-grow;
+        posX = (int) (Math.random() * (mapWidth - 200) + 130);  // 35 = Rock's width
+        posY = Map.PADDING - grow;
 
         rock = new Picture(posX, posY, "resources/sprites/finalStone.png");
         rock.grow(-grow, -grow);
@@ -30,11 +31,11 @@ public class FallingRock implements Gravity{
     @Override
     public void fall() {
 
-        if (rock.getY() <= mapHeight - (rock.getHeight()+50)) {
+        if (rock.getY() <= mapHeight - (rock.getHeight() + 50)) {
             rock.translate(0, Gravity.gravity);
             posY += Gravity.gravity;
         } else {
-            rock.translate(0, -mapHeight+rock.getHeight());
+            rock.translate(0, -mapHeight + rock.getHeight());
             posY = Map.PADDING;
         }
 
@@ -56,7 +57,7 @@ public class FallingRock implements Gravity{
         return rock.getHeight();
     }
 
-    public int getGrow(){
+    public int getGrow() {
         return grow;
     }
 

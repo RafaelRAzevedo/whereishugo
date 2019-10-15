@@ -71,7 +71,7 @@ class Game {
         }
 
         while (!victory) {
-            System.out.println(floorBlocks[0].getWidth());
+            //System.out.println(floorBlocks[0].getWidth());
             int number = (int) (Math.random() * numberOfRocks);
             detectCollision();
             try {
@@ -87,7 +87,7 @@ class Game {
             player.checkPlayerMovement();
 
             if (defeat) {
-                Picture gameOver = new Picture(centerX-250,centerY-150,"sprites/gameOver.png");
+                Picture gameOver = new Picture(centerX-350,centerY-220,"sprites/gameOver.png");
                 gameOver.draw();
                 return;
             }
