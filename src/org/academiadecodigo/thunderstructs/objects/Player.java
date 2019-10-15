@@ -19,11 +19,11 @@ public class Player implements KeyboardHandler {
     private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
             "sprites/player/player_walk2.png",
-            "sprites/player/player_idle.png",};
-    //"sprites/player/player_idle_left.png",};
+            "sprites/player/player_idle.png",
+            "sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 370, "sprites/player/player_idle_right.png");
+        player = new Picture(50, 470, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
@@ -54,7 +54,7 @@ public class Player implements KeyboardHandler {
             case KeyboardEvent.KEY_RIGHT:
                 right = true;
                 break;
-            case KeyboardEvent.KEY_SPACE:
+            case KeyboardEvent.KEY_UP:
                 up = true;
                 break;
         }
@@ -63,10 +63,11 @@ public class Player implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_SPACE:
+            case KeyboardEvent.KEY_UP:
                 up = false;
                 break;
             case KeyboardEvent.KEY_LEFT:
+                //animation("LEFT");
                 left = false;
                 break;
             case KeyboardEvent.KEY_RIGHT:
@@ -99,6 +100,7 @@ public class Player implements KeyboardHandler {
 
         if (velocityY == 0 && jump) {
 
+            velocityY = 25;
             jump = false;
 
         }
@@ -121,9 +123,8 @@ public class Player implements KeyboardHandler {
                 player.delete();
                 player = new Picture(getX(), getY(), "sprites/player/player_cheer2.png");
                 break;
-            case "IDLE":
-                player.delete();
-                player = new Picture(getX(), getY(), sprites[0]);
+            case "LEFT":
+                player = new Picture(getX(), getY(), sprites[4]);
                 break;
         }
     }
