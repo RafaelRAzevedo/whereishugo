@@ -10,6 +10,7 @@ import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Floor;
 import org.academiadecodigo.thunderstructs.objects.Player;
 
+
 class Game implements KeyboardHandler {
 
     private Map map;
@@ -29,8 +30,8 @@ class Game implements KeyboardHandler {
     //GameOver Position
     private int centerX;
     private int centerY;
-    private int seconds;
     //time counter
+
     private final long createdMillis = System.currentTimeMillis();
 
     private Picture[] floorBlocks;
@@ -68,7 +69,6 @@ class Game implements KeyboardHandler {
 
     void start() {
         keyboardEvents();
-        System.out.println(start);
 
         while (start) {
             startScreen();
@@ -100,8 +100,8 @@ class Game implements KeyboardHandler {
             player.checkPlayerMovement();
             if (defeat) {
                 while (!reset) {
-                    gameOverFace = new Picture(centerX - 480, centerY - 320, "sprites/jojo_face_over.png");
-                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/game_over.png");
+                    gameOverFace = new Picture(centerX - 470, centerY - 270, "sprites/gameOverBg.png");
+                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/gameOverTxt.png");
                     gameOver();
                 }
                 return;
