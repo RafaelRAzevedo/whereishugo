@@ -25,7 +25,7 @@ public class Player implements KeyboardHandler {
     //"sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 385, "sprites/player/player_idle_right.png");
+        player = new Picture(50, 370, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
@@ -100,9 +100,6 @@ public class Player implements KeyboardHandler {
 
         if (velocityY == 0 && jump) {
 
-                velocityY = 25;
-                velocityY *= 0.90;
-            System.out.println(velocityX);
                 jump = false;
 
         }

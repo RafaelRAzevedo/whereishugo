@@ -16,7 +16,7 @@ public class FallingRock implements Gravity{
         posX = (int) (Math.random() * (mapWidth - (grow + 60)));  // 60 = Rock's width
         posY = Map.PADDING-grow;
 
-        rock = new Picture(posX, posY, "resources/sprites/stone_1.png");
+        rock = new Picture(posX, posY, "resources/sprites/finalStone.png");
         rock.grow(-grow, -grow);
 
         this.mapHeight = mapHeight;

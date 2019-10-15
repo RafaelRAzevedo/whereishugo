@@ -20,8 +20,6 @@ class Game {
 
     private boolean victory;
     private boolean defeat;
-    private boolean isTrapOpen;
-
     private int victoryPosX;
     private int victoryPosY;
 
@@ -36,7 +34,7 @@ class Game {
     private Picture[] lavaBlock;
 
     private Boolean[] isTilesDraw;
-    private boolean start = true;
+   // private boolean start = true;
 
     Game() {
 
@@ -49,7 +47,6 @@ class Game {
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
         }
-
         victoryPosX = 1650;
         victoryPosY = 300;
         victory = false;
@@ -67,16 +64,14 @@ class Game {
         //TODO: WELCOME SCREENS
         map.init();
         //floor.init();
-
         drawFloor();
-
         player.init();
-
         for (FallingRock r : rock) {
             r.init();
         }
 
         while (!victory) {
+            System.out.println(floorBlocks[0].getWidth());
             int number = (int) (Math.random() * numberOfRocks);
             detectCollision();
             try {
@@ -84,7 +79,6 @@ class Game {
             } catch (InterruptedException ie) {
                 System.out.println(ie);
             }
-
             rock[number].fall();
 
             checkVictory();
@@ -98,9 +92,6 @@ class Game {
                 return;
             }
         }
-
-
-
     }
 
     //TODO: ENDING SCREENS
@@ -111,22 +102,20 @@ class Game {
 
         //Check if floor is drawn or not.
         isTilesDraw = new Boolean[floor.getTiles().length];
-
         lavaBlock = new Picture[floor.getTiles().length];
 
         // Floor creation
         for (int i = 0; i < floor.getTiles().length; i++) {
 
-            floorBlocks[i] = new Picture(i * floor.getTileSize()+Map.PADDING, 450, "resources/sprites/blockTexture.png");
+            floorBlocks[i] = new Picture(i * floor.getTileSize()+Map.PADDING, map.getHeight()-70, "resources/sprites/blockTexture.png");
             floorBlocks[i].draw();
             isTilesDraw[i] = true;
         }
 
-
         // Lava Creation
         for (int i = 0; i < floor.getTiles().length; i++) {
 
-            lavaBlock[i] = new Picture(i * floor.getTileSize(), 400, "resources/sprites/lava_sprite.png");
+            lavaBlock[i] = new Picture(i * floor.getTileSize()+Map.PADDING, map.getHeight()-40, "resources/sprites/lava_sprite.png");
             lavaBlock[i].draw();
         }
     }
@@ -196,6 +185,9 @@ class Game {
                     continue;
                 }
                 player.setHitFloor(true);
+                while((player.getY() + player.getHeight() <= floorBlocks[i].getY())){
+                    player.gravity();
+                }
             }
         }
 
@@ -225,12 +217,24 @@ class Game {
     public void getAnimation() {
 
         if(timeCounter() % 2 == 0){
-            floorBlocks[5].draw();
-            isTilesDraw[5] = true;
+            floorBlocks[4].draw();
+            lavaBlock[4].delete();
+            lavaBlock[4].draw();
+            isTilesDraw[4] = true;
         }
         else{
-            floorBlocks[5].delete();
-            isTilesDraw[5] = false;
+            floorBlocks[4].delete();
+            isTilesDraw[4] = false;
+        }
+        if(timeCounter() % 4 == 0){
+            floorBlocks[10].draw();
+            lavaBlock[10].delete();
+            lavaBlock[10].draw();
+            isTilesDraw[10] = true;
+        }
+        else{
+            floorBlocks[10].delete();
+            isTilesDraw[10] = false;
         }
 
     }
