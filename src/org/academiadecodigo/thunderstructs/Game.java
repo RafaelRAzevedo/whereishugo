@@ -19,7 +19,7 @@ class Game implements KeyboardHandler {
 
     private Floor floor;
 
-    private boolean victory, defeat, isStartScreen;
+    private boolean victory, defeat, isStartScreen, reset;
     private boolean start = true;
     private int victoryPosX;
     private int victoryPosY;
@@ -29,12 +29,14 @@ class Game implements KeyboardHandler {
     //GameOver Position
     private int centerX;
     private int centerY;
-
+    private int seconds;
     //time counter
     private final long createdMillis = System.currentTimeMillis();
 
     private Picture[] floorBlocks;
     private Picture[] lavaBlock;
+    private Picture gameOver;
+    private Picture gameOverFace;
 
     private Boolean[] isTilesDraw;
 
@@ -65,7 +67,6 @@ class Game implements KeyboardHandler {
     }
 
     void start() {
-
         keyboardEvents();
         System.out.println(start);
 
@@ -76,14 +77,13 @@ class Game implements KeyboardHandler {
 
         //TODO: WELCOME SCREENS
         map.init();
-
         drawFloor();
         player.init();
         for (FallingRock r : rock) {
             r.init();
         }
         music = new Music();
-        music.startMusic();
+        music.startMusic("/resources/music/8BitCave.wav");
 
         while (!victory) {
             int number = (int) (Math.random() * numberOfRocks);
@@ -98,10 +98,12 @@ class Game implements KeyboardHandler {
             checkVictory();
             getFloorAnimation();
             player.checkPlayerMovement();
-
             if (defeat) {
-                Picture gameOver = new Picture(centerX - 350, centerY - 220, "sprites/gameOver.png");
-                gameOver.draw();
+                while (!reset) {
+                    gameOverFace = new Picture(centerX - 480, centerY - 320, "sprites/jojo_face_over.png");
+                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/game_over.png");
+                    gameOver();
+                }
                 return;
             }
         }
@@ -199,6 +201,19 @@ class Game implements KeyboardHandler {
         isStartScreen = true;
     }
 
+    public void gameOver() {
+        int seconds;
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int) ((nowMillis - this.createdMillis) / 800);
+
+        gameOverFace.draw();
+        if (seconds % 2 == 0) {
+            gameOver.draw();
+        } else {
+            gameOver.delete();
+        }
+    }
+
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
@@ -225,7 +240,6 @@ class Game implements KeyboardHandler {
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (player.getX() > floorBlocks[i].getX() && (player.getX() + player.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
-
                     player.setHitFloor(false);
                     player.gravity();
                     continue;
