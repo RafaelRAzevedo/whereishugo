@@ -231,7 +231,7 @@ class Game implements KeyboardHandler {
             if (player.getX() < rock[i].getX() + rock[i].getWidth()
                     && player.getX() + player.getWidth() > rock[i].getX()
                     && player.getY() < rock[i].getY() + rock[i].getHeight()
-                    && player.getY() + player.getHeight() > rock[i].getHeight()) {
+                    && player.getY() + player.getHeight() > rock[i].getY()) {
                 setDefeat();
             }
         }
