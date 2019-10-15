@@ -9,14 +9,11 @@ public class Player implements KeyboardHandler {
     private Picture player;
     private int mapWidth;
     private int mapHeight;
-    private int growX = 0;
-    private int growY = 0;
     private boolean hitFloor;
 
     private int velocityX;
     private int velocityY;
     private boolean left, right, up, jump;
-    private long createdMillis;
 
     private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
@@ -113,7 +110,7 @@ public class Player implements KeyboardHandler {
     }
 
     public int getHeight() {
-        return player.getHeight() - growY;
+        return player.getHeight();
     }
 
     public void animation(String animation) {

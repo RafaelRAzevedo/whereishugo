@@ -3,13 +3,14 @@ package org.academiadecodigo.thunderstructs;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Floor;
 import org.academiadecodigo.thunderstructs.objects.Player;
 
-class Game {
+class Game implements KeyboardHandler {
 
     private Map map;
     private Player player;
@@ -18,8 +19,7 @@ class Game {
 
     private Floor floor;
 
-    private boolean victory;
-    private boolean defeat;
+    private boolean victory, defeat, start;
     private int victoryPosX;
     private int victoryPosY;
 
@@ -36,6 +36,10 @@ class Game {
     private Boolean[] isTilesDraw;
    // private boolean start = true;
 
+
+    Picture welcomeScreen;
+
+
     Game() {
 
         map = new Map();
@@ -47,23 +51,32 @@ class Game {
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
         }
+
+        welcomeScreen = new Picture(0, 0, "resources/sprites/welcome.png");
+
         victoryPosX = 1650;
         victoryPosY = 300;
         victory = false;
         defeat = false;
+        start = true;
     }
 
     void start() {
 
         keyboardEvents();
 
-/*        while (start) {
-            welcomeScreen();
-        }*/
+        welcomeScreen();
+
+        while (start) {
+            System.out.println("LOOPING");
+        }
+
+        welcomeScreen.delete();
+
 
         //TODO: WELCOME SCREENS
         map.init();
-        //floor.init();
+
         drawFloor();
         player.init();
         for (FallingRock r : rock) {
@@ -131,10 +144,13 @@ class Game {
     private void keyboardEvents() {
 
         Keyboard keyboard = new Keyboard(player);
+        Keyboard keyboard1 = new Keyboard(this);
 
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
+        KeyboardEvent r = new KeyboardEvent();
+
         KeyboardEvent leftRelease = new KeyboardEvent();
         KeyboardEvent rightRelease = new KeyboardEvent();
         KeyboardEvent spaceRelease = new KeyboardEvent();
@@ -142,6 +158,7 @@ class Game {
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        r.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
         leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
@@ -150,6 +167,7 @@ class Game {
         left.setKey(KeyboardEvent.KEY_LEFT);
         right.setKey(KeyboardEvent.KEY_RIGHT);
         space.setKey(KeyboardEvent.KEY_SPACE);
+        r.setKey(KeyboardEvent.KEY_R);
 
         leftRelease.setKey(KeyboardEvent.KEY_LEFT);
         rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
@@ -158,10 +176,23 @@ class Game {
         keyboard.addEventListener(left);
         keyboard.addEventListener(right);
         keyboard.addEventListener(space);
+        keyboard1.addEventListener(r);
 
         keyboard.addEventListener(leftRelease);
         keyboard.addEventListener(rightRelease);
         keyboard.addEventListener(spaceRelease);
+    }
+
+    @Override
+    public void keyPressed(KeyboardEvent keyboardEvent) {
+        if(keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
+            System.out.println("R");
+            start = false;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyboardEvent keyboardEvent) {
     }
 
     private void detectCollision() {
@@ -180,16 +211,21 @@ class Game {
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (player.getX() > floorBlocks[i].getX() && (player.getX()+player.getWidth()-5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
+
                     player.setHitFloor(false);
                     player.gravity();
                     continue;
                 }
                 player.setHitFloor(true);
+
+                //Gravity
                 while((player.getY() + player.getHeight() <= floorBlocks[i].getY())){
+
                     player.gravity();
                 }
             }
         }
+
 
         if (player.getY() + player.getHeight() >= map.getHeight()) {
             player.getPlayer().delete();
@@ -198,11 +234,15 @@ class Game {
     }
 
     private void welcomeScreen() {
-        Picture welcomeScreen = new Picture(0,0, "resources/sprites/welcome.png");
-
-        welcomeScreen.grow(-100,-200);
         welcomeScreen.draw();
+    }
 
+    public int timeCounter(){
+        int seconds;
+
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int)((nowMillis - this.createdMillis) / 2000);
+        return seconds;
     }
 
     private void setDefeat() {
@@ -239,11 +279,5 @@ class Game {
 
     }
 
-    public int timeCounter(){
-        int seconds;
 
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int)((nowMillis - this.createdMillis) / 2000);
-        return seconds;
-    }
 }
