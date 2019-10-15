@@ -8,12 +8,13 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Floor;
+import org.academiadecodigo.thunderstructs.objects.Npc;
 import org.academiadecodigo.thunderstructs.objects.Player;
-
 
 class Game implements KeyboardHandler {
 
     private Map map;
+    private Npc npc;
     private Player player;
     private int numberOfRocks = 10;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
@@ -30,8 +31,8 @@ class Game implements KeyboardHandler {
     //GameOver Position
     private int centerX;
     private int centerY;
-    //time counter
 
+    //time counter
     private final long createdMillis = System.currentTimeMillis();
 
     private Picture[] floorBlocks;
@@ -49,6 +50,7 @@ class Game implements KeyboardHandler {
     Game() {
 
         map = new Map();
+        npc = new Npc();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
         centerX = map.getWidth() / 2;
@@ -68,7 +70,9 @@ class Game implements KeyboardHandler {
     }
 
     void start() {
+
         keyboardEvents();
+        System.out.println(start);
 
         while (start) {
             startScreen();
@@ -77,6 +81,8 @@ class Game implements KeyboardHandler {
 
         //TODO: WELCOME SCREENS
         map.init();
+        npc.init();
+
         drawFloor();
         player.init();
         for (FallingRock r : rock) {
@@ -98,6 +104,7 @@ class Game implements KeyboardHandler {
             checkVictory();
             getFloorAnimation();
             player.checkPlayerMovement();
+
             if (defeat) {
                 while (!reset) {
                     gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
@@ -240,6 +247,7 @@ class Game implements KeyboardHandler {
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (player.getX() > floorBlocks[i].getX() && (player.getX() + player.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
+
                     player.setHitFloor(false);
                     player.gravity();
                     continue;
