@@ -44,7 +44,9 @@ class Game implements KeyboardHandler {
 
     private Music music;
 
+    Picture welcomeButtonStart;
     Picture welcomeScreen;
+    Picture winningScreen;
 
 
     Game() {
@@ -60,7 +62,11 @@ class Game implements KeyboardHandler {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
         }
 
-        welcomeScreen = new Picture(0, 0, "resources/sprites/welcome.png");
+        welcomeButtonStart = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcome.png");
+        welcomeScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcomeScreen.png");
+        gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
+        gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
+
 
         victoryPosX = 1650;
         victoryPosY = 300;
@@ -72,11 +78,13 @@ class Game implements KeyboardHandler {
     void start() {
 
         keyboardEvents();
-        System.out.println(start);
 
+        welcomeScreen.draw();
         while (start) {
+
             startScreen();
         }
+        welcomeButtonStart.delete();
         welcomeScreen.delete();
 
         //TODO: WELCOME SCREENS
@@ -107,13 +115,15 @@ class Game implements KeyboardHandler {
 
             if (defeat) {
                 while (!reset) {
-                    gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
-                    gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
+
                     gameOver();
                 }
                 return;
             }
         }
+        //Winning Screen
+        winningScreen = new Picture(Map.PADDING,Map.PADDING, "resources/sprites/win_screen.png");
+        winningScreen.draw();
     }
 
     //TODO: ENDING SCREENS
@@ -201,9 +211,9 @@ class Game implements KeyboardHandler {
         long nowMillis = System.currentTimeMillis();
         seconds = (int) ((nowMillis - this.createdMillis) / 800);
         if (seconds % 2 == 0) {
-            welcomeScreen.draw();
+            welcomeButtonStart.draw();
         } else {
-            welcomeScreen.delete();
+            welcomeButtonStart.delete();
         }
         isStartScreen = true;
     }
@@ -262,6 +272,11 @@ class Game implements KeyboardHandler {
 
         if (player.getY() + player.getHeight() >= map.getHeight() - 10) {
             setDefeat();
+        }
+
+        //Winning place
+        if(player.getX() == npc.getPosX()-60){
+            victory = true;
         }
     }
 

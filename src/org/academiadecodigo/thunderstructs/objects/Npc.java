@@ -18,7 +18,7 @@ public class Npc {
     };
 
     public Npc() {
-        npc = new Picture(800, 450, "sprites/player/player_stand.png");
+        npc = new Picture(800, 445, "sprites/characters/hugo.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
     }
