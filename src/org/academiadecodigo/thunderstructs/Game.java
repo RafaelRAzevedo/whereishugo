@@ -100,8 +100,8 @@ class Game implements KeyboardHandler {
             player.checkPlayerMovement();
             if (defeat) {
                 while (!reset) {
-                    gameOverFace = new Picture(centerX - 470, centerY - 270, "sprites/gameOverBg.png");
-                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/gameOverTxt.png");
+                    gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
+                    gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
                     gameOver();
                 }
                 return;
