@@ -8,7 +8,7 @@ public class Map {
     private Picture background;
 
     public Map() {
-        background = new Picture(PADDING,PADDING,"sprites/background_1.jpg");
+        background = new Picture(PADDING,PADDING,"resources/sprites/finalBackground.png");
     }
 
     public void init() {
