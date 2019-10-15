@@ -24,6 +24,7 @@ class Game implements KeyboardHandler {
     private int victoryPosX;
     private int victoryPosY;
 
+    private boolean canMove = true;
 
     //GameOver Position
     private int centerX;
@@ -83,6 +84,7 @@ class Game implements KeyboardHandler {
         }
         music = new Music();
         music.startMusic();
+
         while (!victory) {
             int number = (int) (Math.random() * numberOfRocks);
             detectCollision();
@@ -171,8 +173,12 @@ class Game implements KeyboardHandler {
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKey(KeyboardEvent.KEY_SPACE);
 
-        keyboard.addEventListener(left);
-        keyboard.addEventListener(right);
+
+        if (canMove) {
+            keyboard.addEventListener(right);
+            keyboard.addEventListener(left);
+        }
+
         keyboard.addEventListener(up);
         keyboard1.addEventListener(space);
 
@@ -225,26 +231,18 @@ class Game implements KeyboardHandler {
                     player.gravity();
                     continue;
                 }
-                player.setHitFloor(true);
-
                 //Gravity
-                while ((player.getY() + player.getHeight() <= floorBlocks[i].getY())) {
-
+                while ((player.getY() + player.getHeight() < floorBlocks[i].getY())) {
                     player.gravity();
+                    canMove = false;
                 }
             }
         }
 
-
-        if (player.getY() + player.getHeight() >= map.getHeight()) {
-            player.getPlayer().delete();
+        if (player.getY() + player.getHeight() >= map.getHeight()-10) {
             defeat = true;
         }
     }
-
-  /*  private void welcomeScreen() {
-        welcomeScreen.draw();
-    }*/
 
     public int timeCounter() {
         int seconds;
