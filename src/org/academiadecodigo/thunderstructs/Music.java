@@ -9,8 +9,8 @@ import java.net.URL;
 // Change this class to your liking, this is just a base example
 
 public class Music {
-    public void startMusic() {
-        String pathStr = "/resources/music/8BitCave.wav";
+    public void startMusic(String sound) {
+        String pathStr = sound;
         URL soundURL;
         AudioInputStream audioInputStream = null;
         try {
