@@ -96,7 +96,7 @@ class Game implements KeyboardHandler {
             rock[number].fall();
 
             checkVictory();
-            getAnimation();
+            getFloorAnimation();
             player.checkPlayerMovement();
 
             if (defeat) {
@@ -216,7 +216,7 @@ class Game implements KeyboardHandler {
             if ((player.getX() >= rock[i].getX())
                     && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
                 if (player.getY() <= rock[i].getY() + rock[i].getHeight()) {
-                    System.out.println("hit");
+
                     setDefeat();
                 }
             }
@@ -240,7 +240,7 @@ class Game implements KeyboardHandler {
         }
 
         if (player.getY() + player.getHeight() >= map.getHeight()-10) {
-            defeat = true;
+            setDefeat();
         }
     }
 
@@ -261,7 +261,7 @@ class Game implements KeyboardHandler {
         victory = true;
     }
 
-    public void getAnimation() {
+    public void getFloorAnimation() {
 
         if (timeCounter() % 2 == 0) {
             floorBlocks[4].draw();
@@ -272,6 +272,7 @@ class Game implements KeyboardHandler {
             floorBlocks[4].delete();
             isTilesDraw[4] = false;
         }
+
         if (timeCounter() % 4 == 0) {
             floorBlocks[10].draw();
             lavaBlock[10].delete();
@@ -280,6 +281,16 @@ class Game implements KeyboardHandler {
         } else {
             floorBlocks[10].delete();
             isTilesDraw[10] = false;
+        }
+
+        if (timeCounter() % 3 == 0) {
+            floorBlocks[8].draw();
+            lavaBlock[8].delete();
+            lavaBlock[8].draw();
+            isTilesDraw[8] = true;
+        } else {
+            floorBlocks[8].delete();
+            isTilesDraw[8] = false;
         }
 
     }
