@@ -21,7 +21,7 @@ class Game implements KeyboardHandler {
 
     private Floor floor;
 
-    private boolean victory, defeat, isStartScreen;
+    private boolean victory, defeat, isStartScreen, reset;
     private boolean start = true;
     private int victoryPosX;
     private int victoryPosY;
@@ -37,6 +37,8 @@ class Game implements KeyboardHandler {
 
     private Picture[] floorBlocks;
     private Picture[] lavaBlock;
+    private Picture gameOver;
+    private Picture gameOverFace;
 
     private Boolean[] isTilesDraw;
 
@@ -87,7 +89,7 @@ class Game implements KeyboardHandler {
             r.init();
         }
         music = new Music();
-        music.startMusic();
+        music.startMusic("/resources/music/8BitCave.wav");
 
         while (!victory) {
             int number = (int) (Math.random() * numberOfRocks);
@@ -104,8 +106,11 @@ class Game implements KeyboardHandler {
             player.checkPlayerMovement();
 
             if (defeat) {
-                Picture gameOver = new Picture(centerX - 350, centerY - 220, "sprites/gameOver.png");
-                gameOver.draw();
+                while (!reset) {
+                    gameOverFace = new Picture(centerX - 470, centerY - 270, "sprites/gameOverBg.png");
+                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/gameOverTxt.png");
+                    gameOver();
+                }
                 return;
             }
         }
@@ -203,6 +208,19 @@ class Game implements KeyboardHandler {
         isStartScreen = true;
     }
 
+    public void gameOver() {
+        int seconds;
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int) ((nowMillis - this.createdMillis) / 800);
+
+        gameOverFace.draw();
+        if (seconds % 2 == 0) {
+            gameOver.draw();
+        } else {
+            gameOver.delete();
+        }
+    }
+
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
@@ -220,7 +238,7 @@ class Game implements KeyboardHandler {
             if (player.getX() < rock[i].getX() + rock[i].getWidth()
                     && player.getX() + player.getWidth() > rock[i].getX()
                     && player.getY() < rock[i].getY() + rock[i].getHeight()
-                    && player.getY() + player.getHeight() > rock[i].getHeight()) {
+                    && player.getY() + player.getHeight() > rock[i].getY()) {
                 setDefeat();
             }
         }
