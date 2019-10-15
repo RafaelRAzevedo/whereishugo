@@ -213,12 +213,11 @@ class Game implements KeyboardHandler {
     private void detectCollision() {
         //Falling rocks
         for (int i = 0; i < rock.length; i++) {
-            if ((player.getX() >= rock[i].getX())
-                    && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
-                if (player.getY() <= rock[i].getY() + rock[i].getHeight()) {
-
-                    setDefeat();
-                }
+            if (player.getX() < rock[i].getX() + rock[i].getWidth()
+                    && player.getX() + player.getWidth() > rock[i].getX()
+                    && player.getY() < rock[i].getY() + rock[i].getHeight()
+                    && player.getY() + player.getHeight() > rock[i].getHeight()) {
+                setDefeat();
             }
         }
 
@@ -239,7 +238,7 @@ class Game implements KeyboardHandler {
             }
         }
 
-        if (player.getY() + player.getHeight() >= map.getHeight()-10) {
+        if (player.getY() + player.getHeight() >= map.getHeight() - 10) {
             setDefeat();
         }
     }

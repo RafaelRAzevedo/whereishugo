@@ -6,21 +6,20 @@ import org.academiadecodigo.thunderstructs.map.Map;
 public class FallingRock implements Gravity {
 
     private int mapHeight;
+    private int mapWidth;
     private Picture rock;
     private int posX;
     private int posY;
-    private final int grow;
 
     public FallingRock(int mapHeight, int mapWidth) {
-        grow = 0;
 
         posX = (int) (Math.random() * (mapWidth - 200) + 130);  // 35 = Rock's width
-        posY = Map.PADDING - grow;
+        posY = Map.PADDING;
 
         rock = new Picture(posX, posY, "resources/sprites/finalStone.png");
-        rock.grow(-grow, -grow);
 
         this.mapHeight = mapHeight;
+        this.mapWidth = mapWidth;
     }
 
     public void init() {
@@ -32,10 +31,10 @@ public class FallingRock implements Gravity {
     public void fall() {
 
         if (rock.getY() <= mapHeight - (rock.getHeight() + 50)) {
-            rock.translate(0, Gravity.gravity);
-            posY += Gravity.gravity;
+            rock.translate(0, Math.floor(3*Gravity.gravity/2));
+            posY += 3*Gravity.gravity/2;
         } else {
-            rock.translate(0, -mapHeight + rock.getHeight());
+            rock.translate(0, -mapHeight + (50 + Map.PADDING + rock.getHeight()));
             posY = Map.PADDING;
         }
 
@@ -55,10 +54,6 @@ public class FallingRock implements Gravity {
 
     public int getHeight() {
         return rock.getHeight();
-    }
-
-    public int getGrow() {
-        return grow;
     }
 
 }
