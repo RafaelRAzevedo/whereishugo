@@ -3,6 +3,7 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.thunderstructs.map.Map;
 
 public class Player implements KeyboardHandler {
 
@@ -81,11 +82,13 @@ public class Player implements KeyboardHandler {
         }
 
         if (left && !right) {
-            velocityX = -5;
+            //velocityX = -3;
+            velocityX = (player.getX() - Map.PADDING) >= Map.PADDING ? -3 : 0;
         }
 
         if (!left && right) {
-            velocityX = 5;
+            //velocityX = 5;
+            velocityX = player.getX() + player.getWidth() <= mapWidth ? 3 : 0;
         }
 
         if (!right && !left) {
@@ -94,19 +97,18 @@ public class Player implements KeyboardHandler {
 
         velocityY *= 0.90;
 
-
         if (velocityY == 0 && jump) {
 
-                jump = false;
+            jump = false;
 
         }
-
+        velocityX *= 0.90;
         player.translate(velocityX, velocityY);
         player.draw();
     }
 
     public int getWidth() {
-        return player.getWidth()-3;
+        return player.getWidth() - 3;
     }
 
     public int getHeight() {

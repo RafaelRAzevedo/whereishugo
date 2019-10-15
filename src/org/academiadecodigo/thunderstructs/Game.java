@@ -36,6 +36,7 @@ class Game implements KeyboardHandler {
     private Boolean[] isTilesDraw;
    // private boolean start = true;
 
+    private Music music;
 
     Picture welcomeScreen;
 
@@ -65,9 +66,9 @@ class Game implements KeyboardHandler {
 
         keyboardEvents();
 
-        while (start) {
+        //while (start) {
             //System.out.println("LOOPING");
-        }
+        //}
 
         welcomeScreen.delete();
 
@@ -80,7 +81,8 @@ class Game implements KeyboardHandler {
         for (FallingRock r : rock) {
             r.init();
         }
-
+        music = new Music();
+        music.startMusic();
         while (!victory) {
             //System.out.println(floorBlocks[0].getWidth());
             int number = (int) (Math.random() * numberOfRocks);
@@ -174,7 +176,7 @@ class Game implements KeyboardHandler {
         keyboard.addEventListener(left);
         keyboard.addEventListener(right);
         keyboard.addEventListener(space);
-        keyboard1.addEventListener(r);
+        keyboard.addEventListener(r);
 
         keyboard.addEventListener(leftRelease);
         keyboard.addEventListener(rightRelease);
@@ -184,7 +186,6 @@ class Game implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         if(keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
-            System.out.println("R");
             start = false;
         }
     }
