@@ -19,9 +19,12 @@ class Game implements KeyboardHandler {
 
     private Floor floor;
 
-    private boolean victory, defeat, start;
+    private boolean victory, defeat, isStartScreen;
+    private boolean start = true;
     private int victoryPosX;
     private int victoryPosY;
+
+    private boolean canMove = true;
 
     //GameOver Position
     private int centerX;
@@ -34,8 +37,8 @@ class Game implements KeyboardHandler {
     private Picture[] lavaBlock;
 
     private Boolean[] isTilesDraw;
-   // private boolean start = true;
 
+    private Music music;
 
     Picture welcomeScreen;
 
@@ -45,8 +48,8 @@ class Game implements KeyboardHandler {
         map = new Map();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
-        centerX = map.getWidth()/2;
-        centerY = map.getHeight()/2;
+        centerX = map.getWidth() / 2;
+        centerY = map.getHeight() / 2;
 
         for (int i = 0; i < numberOfRocks; i++) {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
@@ -58,19 +61,18 @@ class Game implements KeyboardHandler {
         victoryPosY = 300;
         victory = false;
         defeat = false;
-        start = true;
+
     }
 
     void start() {
 
         keyboardEvents();
+        System.out.println(start);
 
         while (start) {
-            //System.out.println("LOOPING");
+            startScreen();
         }
-
         welcomeScreen.delete();
-
 
         //TODO: WELCOME SCREENS
         map.init();
@@ -80,9 +82,10 @@ class Game implements KeyboardHandler {
         for (FallingRock r : rock) {
             r.init();
         }
+        music = new Music();
+        music.startMusic();
 
         while (!victory) {
-            //System.out.println(floorBlocks[0].getWidth());
             int number = (int) (Math.random() * numberOfRocks);
             detectCollision();
             try {
@@ -93,12 +96,11 @@ class Game implements KeyboardHandler {
             rock[number].fall();
 
             checkVictory();
-
             getAnimation();
             player.checkPlayerMovement();
 
             if (defeat) {
-                Picture gameOver = new Picture(centerX-350,centerY-220,"sprites/gameOver.png");
+                Picture gameOver = new Picture(centerX - 350, centerY - 220, "sprites/gameOver.png");
                 gameOver.draw();
                 return;
             }
@@ -107,7 +109,7 @@ class Game implements KeyboardHandler {
 
     //TODO: ENDING SCREENS
 
-    private void drawFloor(){
+    private void drawFloor() {
         //implementação do array de floor blocks no game em vez da Class Floor
         floorBlocks = new Picture[floor.getTiles().length];
 
@@ -118,7 +120,7 @@ class Game implements KeyboardHandler {
         // Floor creation
         for (int i = 0; i < floor.getTiles().length; i++) {
 
-            floorBlocks[i] = new Picture(i * floor.getTileSize()+Map.PADDING, map.getHeight()-70, "resources/sprites/blockTexture.png");
+            floorBlocks[i] = new Picture(i * floor.getTileSize() + Map.PADDING, map.getHeight() - 70, "resources/sprites/blockTexture.png");
             floorBlocks[i].draw();
             isTilesDraw[i] = true;
         }
@@ -126,7 +128,7 @@ class Game implements KeyboardHandler {
         // Lava Creation
         for (int i = 0; i < floor.getTiles().length; i++) {
 
-            lavaBlock[i] = new Picture(i * floor.getTileSize()+Map.PADDING, map.getHeight()-40, "resources/sprites/lava_sprite.png");
+            lavaBlock[i] = new Picture(i * floor.getTileSize() + Map.PADDING, map.getHeight() - 40, "resources/sprites/lava_sprite.png");
             lavaBlock[i].draw();
         }
     }
@@ -147,44 +149,59 @@ class Game implements KeyboardHandler {
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
-        KeyboardEvent r = new KeyboardEvent();
+        KeyboardEvent up = new KeyboardEvent();
 
         KeyboardEvent leftRelease = new KeyboardEvent();
         KeyboardEvent rightRelease = new KeyboardEvent();
-        KeyboardEvent spaceRelease = new KeyboardEvent();
+        KeyboardEvent upRelease = new KeyboardEvent();
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        r.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-
         leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        spaceRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-
         left.setKey(KeyboardEvent.KEY_LEFT);
-        right.setKey(KeyboardEvent.KEY_RIGHT);
-        space.setKey(KeyboardEvent.KEY_SPACE);
-        r.setKey(KeyboardEvent.KEY_R);
-
         leftRelease.setKey(KeyboardEvent.KEY_LEFT);
-        rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
-        spaceRelease.setKey(KeyboardEvent.KEY_SPACE);
 
-        keyboard.addEventListener(left);
-        keyboard.addEventListener(right);
-        keyboard.addEventListener(space);
-        keyboard1.addEventListener(r);
+        right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        right.setKey(KeyboardEvent.KEY_RIGHT);
+        rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
+
+        up.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        upRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        up.setKey(KeyboardEvent.KEY_UP);
+        upRelease.setKey(KeyboardEvent.KEY_UP);
+
+        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        space.setKey(KeyboardEvent.KEY_SPACE);
+
+
+        if (canMove) {
+            keyboard.addEventListener(right);
+            keyboard.addEventListener(left);
+        }
+
+        keyboard.addEventListener(up);
+        keyboard1.addEventListener(space);
 
         keyboard.addEventListener(leftRelease);
         keyboard.addEventListener(rightRelease);
-        keyboard.addEventListener(spaceRelease);
+        keyboard.addEventListener(upRelease);
+    }
+
+    public void startScreen() {
+        int seconds;
+        long nowMillis = System.currentTimeMillis();
+        seconds = (int) ((nowMillis - this.createdMillis) / 800);
+        if (seconds % 2 == 0) {
+            welcomeScreen.draw();
+        } else {
+            welcomeScreen.delete();
+        }
+        isStartScreen = true;
     }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        if(keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
-            System.out.println("R");
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
             start = false;
         }
     }
@@ -207,39 +224,31 @@ class Game implements KeyboardHandler {
 
         //Tiles
         for (int i = 0; i < floorBlocks.length - 1; i++) {
-            if (player.getX() > floorBlocks[i].getX() && (player.getX()+player.getWidth()-5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
+            if (player.getX() > floorBlocks[i].getX() && (player.getX() + player.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
 
                     player.setHitFloor(false);
                     player.gravity();
                     continue;
                 }
-                player.setHitFloor(true);
-
                 //Gravity
-                while((player.getY() + player.getHeight() <= floorBlocks[i].getY())){
-
+                while ((player.getY() + player.getHeight() < floorBlocks[i].getY())) {
                     player.gravity();
+                    canMove = false;
                 }
             }
         }
 
-
-        if (player.getY() + player.getHeight() >= map.getHeight()) {
-            player.getPlayer().delete();
+        if (player.getY() + player.getHeight() >= map.getHeight()-10) {
             defeat = true;
         }
     }
 
-    private void welcomeScreen() {
-        welcomeScreen.draw();
-    }
-
-    public int timeCounter(){
+    public int timeCounter() {
         int seconds;
 
         long nowMillis = System.currentTimeMillis();
-        seconds = (int)((nowMillis - this.createdMillis) / 2000);
+        seconds = (int) ((nowMillis - this.createdMillis) / 2000);
         return seconds;
     }
 
@@ -254,23 +263,21 @@ class Game implements KeyboardHandler {
 
     public void getAnimation() {
 
-        if(timeCounter() % 2 == 0){
+        if (timeCounter() % 2 == 0) {
             floorBlocks[4].draw();
             lavaBlock[4].delete();
             lavaBlock[4].draw();
             isTilesDraw[4] = true;
-        }
-        else{
+        } else {
             floorBlocks[4].delete();
             isTilesDraw[4] = false;
         }
-        if(timeCounter() % 4 == 0){
+        if (timeCounter() % 4 == 0) {
             floorBlocks[10].draw();
             lavaBlock[10].delete();
             lavaBlock[10].draw();
             isTilesDraw[10] = true;
-        }
-        else{
+        } else {
             floorBlocks[10].delete();
             isTilesDraw[10] = false;
         }
