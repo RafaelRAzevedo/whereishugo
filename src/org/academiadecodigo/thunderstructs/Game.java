@@ -8,11 +8,13 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Floor;
+import org.academiadecodigo.thunderstructs.objects.Npc;
 import org.academiadecodigo.thunderstructs.objects.Player;
 
 class Game implements KeyboardHandler {
 
     private Map map;
+    private Npc npc;
     private Player player;
     private int numberOfRocks = 10;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
@@ -46,6 +48,7 @@ class Game implements KeyboardHandler {
     Game() {
 
         map = new Map();
+        npc = new Npc();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
         centerX = map.getWidth() / 2;
@@ -76,6 +79,7 @@ class Game implements KeyboardHandler {
 
         //TODO: WELCOME SCREENS
         map.init();
+        npc.init();
 
         drawFloor();
         player.init();
