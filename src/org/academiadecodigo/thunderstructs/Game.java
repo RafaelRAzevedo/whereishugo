@@ -66,7 +66,7 @@ class Game implements KeyboardHandler {
         keyboardEvents();
 
         while (start) {
-            System.out.println("LOOPING");
+            //System.out.println("LOOPING");
         }
 
         welcomeScreen.delete();
