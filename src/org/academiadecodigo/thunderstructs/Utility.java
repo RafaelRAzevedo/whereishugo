@@ -161,53 +161,48 @@ public class Utility {
 
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (rat_enemy.getX() > floorBlocks[i].getX() && (rat_enemy.getX() + rat_enemy.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
-                System.out.println("ioaoshdioahsiodh");
                 if (!isTilesDraw[i]) {
+                    rat_enemy.gravity();
 
-                    rat_enemy.gravity();
-                    continue;
-                }
-                while ((rat_enemy.getY() + rat_enemy.getHeight() < floorBlocks[i].getY())) {
-                    rat_enemy.gravity();
                 }
             }
         }
     }
 
-        public FallingRock[] getRock () {
-            return rock;
-        }
-
-        public Map getMap () {
-            return map;
-        }
-
-        public int getNumberOfRocks () {
-            return numberOfRocks;
-        }
-
-        public void setDefeat () {
-            defeat = true;
-        }
-
-        public void setVictory () {
-            victory = true;
-        }
-
-        public boolean isCanMove () {
-            return canMove;
-        }
-
-        public boolean isVictory () {
-            return victory;
-        }
-
-        public boolean isDefeat () {
-            return defeat;
-        }
-
-        public static void setStart () {
-            start = false;
-        }
-
+    public FallingRock[] getRock() {
+        return rock;
     }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public int getNumberOfRocks() {
+        return numberOfRocks;
+    }
+
+    public void setDefeat() {
+        defeat = true;
+    }
+
+    public void setVictory() {
+        victory = true;
+    }
+
+    public boolean isCanMove() {
+        return canMove;
+    }
+
+    public boolean isVictory() {
+        return victory;
+    }
+
+    public boolean isDefeat() {
+        return defeat;
+    }
+
+    public static void setStart() {
+        start = false;
+    }
+
+}
