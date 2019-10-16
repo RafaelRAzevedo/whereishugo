@@ -44,7 +44,6 @@ class Game implements KeyboardHandler {
 
     Picture welcomeScreen;
 
-
     Game() {
 
         map = new Map();
@@ -63,7 +62,6 @@ class Game implements KeyboardHandler {
         victoryPosY = 300;
         victory = false;
         defeat = false;
-
     }
 
     void start() {
@@ -308,6 +306,4 @@ class Game implements KeyboardHandler {
         }
 
     }
-
-
 }
