@@ -64,7 +64,7 @@ class Game implements KeyboardHandler {
 
         welcomeButtonStart = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcome.png");
         welcomeScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcomeScreen.png");
-        gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
+        gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "sprites/gameOverBg.png");
         gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
 
 
@@ -81,9 +81,10 @@ class Game implements KeyboardHandler {
 
         welcomeScreen.draw();
         while (start) {
-
             startScreen();
+
         }
+
         welcomeButtonStart.delete();
         welcomeScreen.delete();
 
@@ -110,7 +111,7 @@ class Game implements KeyboardHandler {
             rock[number].fall();
 
             checkVictory();
-            getFloorAnimation();
+            getFloorAnimation(2000);
             player.checkPlayerMovement();
 
             if (defeat) {
@@ -122,7 +123,7 @@ class Game implements KeyboardHandler {
             }
         }
         //Winning Screen
-        winningScreen = new Picture(Map.PADDING,Map.PADDING, "resources/sprites/win_screen.png");
+        winningScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/win_screen.png");
         winningScreen.draw();
     }
 
@@ -218,6 +219,10 @@ class Game implements KeyboardHandler {
         isStartScreen = true;
     }
 
+    public void instructionsScreen(){
+
+    }
+
     public void gameOver() {
         int seconds;
         long nowMillis = System.currentTimeMillis();
@@ -275,16 +280,16 @@ class Game implements KeyboardHandler {
         }
 
         //Winning place
-        if(player.getX() == npc.getPosX()-60){
+        if (player.getX() >= npc.getPosX() - 30) {
             victory = true;
         }
     }
 
-    public int timeCounter() {
+    public int timeCounter(int delay) {
         int seconds;
 
         long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 2000);
+        seconds = (int) ((nowMillis - this.createdMillis) / delay);
         return seconds;
     }
 
@@ -297,9 +302,9 @@ class Game implements KeyboardHandler {
         victory = true;
     }
 
-    public void getFloorAnimation() {
+    public void getFloorAnimation(int delay) {
 
-        if (timeCounter() % 2 == 0) {
+        if (timeCounter(delay) % 2 == 0) {
             floorBlocks[4].draw();
             lavaBlock[4].delete();
             lavaBlock[4].draw();
@@ -309,7 +314,7 @@ class Game implements KeyboardHandler {
             isTilesDraw[4] = false;
         }
 
-        if (timeCounter() % 4 == 0) {
+        if (timeCounter(delay) % 4 == 0) {
             floorBlocks[10].draw();
             lavaBlock[10].delete();
             lavaBlock[10].draw();
@@ -319,7 +324,7 @@ class Game implements KeyboardHandler {
             isTilesDraw[10] = false;
         }
 
-        if (timeCounter() % 3 == 0) {
+        if (timeCounter(delay) % 3 == 0) {
             floorBlocks[8].draw();
             lavaBlock[8].delete();
             lavaBlock[8].draw();
@@ -328,8 +333,5 @@ class Game implements KeyboardHandler {
             floorBlocks[8].delete();
             isTilesDraw[8] = false;
         }
-
     }
-
-
 }
