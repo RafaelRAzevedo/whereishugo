@@ -117,7 +117,7 @@ public class Player implements KeyboardHandler {
         return player.getHeight();
     }
 
-    public void animation(String animation) {
+   /* public void animation(String animation) {
         switch (animation) {
             case "FALLING":
                 player.delete();
@@ -127,7 +127,7 @@ public class Player implements KeyboardHandler {
                 player = new Picture(getX(), getY(), sprites[4]);
                 break;
         }
-    }
+    }*/
 
     public void setHitFloor(boolean hitFloor) {
         this.hitFloor = hitFloor;

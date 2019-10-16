@@ -1,12 +1,10 @@
 package org.academiadecodigo.thunderstructs;
 
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Npc;
 import org.academiadecodigo.thunderstructs.objects.Player;
+import org.academiadecodigo.thunderstructs.objects.Rat_Enemy;
 
 class Game {
 
@@ -14,6 +12,7 @@ class Game {
     private Npc npc;
     private Player player;
     private Map map;
+    private Rat_Enemy ratEnemy;
     private KeyboardUtility keyboardUtility;
 
     private Screens screens;
@@ -31,7 +30,9 @@ class Game {
         player = new Player(map.getWidth(), map.getHeight());
         screens = new Screens();
         npc = new Npc();
-        utility = new Utility(player,map, npc);
+        ratEnemy = new Rat_Enemy(400);
+
+        utility = new Utility(player,map, npc,ratEnemy);
         keyboardUtility = new KeyboardUtility(this, player, utility);
 
     }
@@ -46,6 +47,7 @@ class Game {
 
         utility.drawFloor();
         player.init();
+        ratEnemy.init();
         for (FallingRock r : utility.getRock()) {
             r.init();
         }
@@ -65,9 +67,10 @@ class Game {
             }
 
             utility.getRock()[number].fall();
-
+            utility.detectFloor();
             utility.getFloorAnimation(2);
             player.checkPlayerMovement();
+            ratEnemy.ratMovement();
 
             if (utility.isDefeat()) {
                 music.stopMusic();
