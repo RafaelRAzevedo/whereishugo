@@ -81,10 +81,9 @@ class Game implements KeyboardHandler {
 
         welcomeScreen.draw();
         while (start) {
+
             startScreen();
-
         }
-
         welcomeButtonStart.delete();
         welcomeScreen.delete();
 
@@ -111,10 +110,13 @@ class Game implements KeyboardHandler {
             rock[number].fall();
 
             checkVictory();
-            getFloorAnimation(2000);
+            getFloorAnimation(2);
             player.checkPlayerMovement();
 
             if (defeat) {
+                music.stopMusic();
+                music = new Music();
+                music.startMusic("/resources/music/gameOver.wav");
                 while (!reset) {
 
                     gameOver();
@@ -208,10 +210,8 @@ class Game implements KeyboardHandler {
     }
 
     public void startScreen() {
-        int seconds;
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 800);
-        if (seconds % 2 == 0) {
+
+        if (timeCounter(0.5) % 2 == 0) {
             welcomeButtonStart.draw();
         } else {
             welcomeButtonStart.delete();
@@ -224,12 +224,9 @@ class Game implements KeyboardHandler {
     }
 
     public void gameOver() {
-        int seconds;
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 800);
 
         gameOverFace.draw();
-        if (seconds % 2 == 0) {
+        if (timeCounter(0.5) % 2 == 0) {
             gameOver.draw();
         } else {
             gameOver.delete();
@@ -280,16 +277,16 @@ class Game implements KeyboardHandler {
         }
 
         //Winning place
-        if (player.getX() >= npc.getPosX() - 30) {
+        if(player.getX() == npc.getPosX()-60){
             victory = true;
         }
     }
 
-    public int timeCounter(int delay) {
+    public int timeCounter(double delay) {
         int seconds;
-
+        double delayInSeconds = delay*1000;
         long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / delay);
+        seconds = (int) ((nowMillis - this.createdMillis) / delayInSeconds);
         return seconds;
     }
 
@@ -333,5 +330,8 @@ class Game implements KeyboardHandler {
             floorBlocks[8].delete();
             isTilesDraw[8] = false;
         }
+
     }
+
+
 }
