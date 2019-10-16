@@ -64,7 +64,7 @@ class Game implements KeyboardHandler {
 
         welcomeButtonStart = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcome.png");
         welcomeScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcomeScreen.png");
-        gameOverFace = new Picture(Map.PADDING, Map.PADDING+10, "sprites/gameOverBg.png");
+        gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "sprites/gameOverBg.png");
         gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
 
 
@@ -99,6 +99,7 @@ class Game implements KeyboardHandler {
         music = new Music();
         music.startMusic("/resources/music/8BitCave.wav");
 
+
         while (!victory) {
             int number = (int) (Math.random() * numberOfRocks);
             detectCollision();
@@ -114,15 +115,17 @@ class Game implements KeyboardHandler {
             player.checkPlayerMovement();
 
             if (defeat) {
+                music.stopMusic();
+                music = new Music();
+                music.startMusic("/resources/music/gameOver.wav");
                 while (!reset) {
-
                     gameOver();
                 }
                 return;
             }
         }
         //Winning Screen
-        winningScreen = new Picture(Map.PADDING,Map.PADDING, "resources/sprites/win_screen.png");
+        winningScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/win_screen.png");
         winningScreen.draw();
     }
 
@@ -275,7 +278,7 @@ class Game implements KeyboardHandler {
         }
 
         //Winning place
-        if(player.getX() == npc.getPosX()-60){
+        if (player.getX() == npc.getPosX() - 60) {
             victory = true;
         }
     }

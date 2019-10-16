@@ -9,6 +9,9 @@ import java.net.URL;
 // Change this class to your liking, this is just a base example
 
 public class Music {
+
+    Clip clip;
+
     public void startMusic(String sound) {
         String pathStr = sound;
         URL soundURL;
@@ -27,7 +30,7 @@ public class Music {
             e.printStackTrace();
         }
         try {
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
             clip.loop(clip.LOOP_CONTINUOUSLY);
@@ -36,5 +39,11 @@ public class Music {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void stopMusic() {
+
+        clip.stop();
+
     }
 }
