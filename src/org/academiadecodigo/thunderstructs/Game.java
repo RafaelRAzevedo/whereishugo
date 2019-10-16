@@ -8,11 +8,13 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Floor;
+import org.academiadecodigo.thunderstructs.objects.Npc;
 import org.academiadecodigo.thunderstructs.objects.Player;
 
 class Game implements KeyboardHandler {
 
     private Map map;
+    private Npc npc;
     private Player player;
     private int numberOfRocks = 10;
     private FallingRock[] rock = new FallingRock[numberOfRocks];
@@ -29,7 +31,7 @@ class Game implements KeyboardHandler {
     //GameOver Position
     private int centerX;
     private int centerY;
-    private int seconds;
+
     //time counter
     private final long createdMillis = System.currentTimeMillis();
 
@@ -42,11 +44,14 @@ class Game implements KeyboardHandler {
 
     private Music music;
 
+    Picture welcomeButtonStart;
     Picture welcomeScreen;
+    Picture winningScreen;
 
     Game() {
 
         map = new Map();
+        npc = new Npc();
         player = new Player(map.getWidth(), map.getHeight());
         floor = new Floor(map.getWidth());
         centerX = map.getWidth() / 2;
@@ -56,7 +61,11 @@ class Game implements KeyboardHandler {
             rock[i] = new FallingRock(map.getHeight(), map.getWidth());
         }
 
-        welcomeScreen = new Picture(0, 0, "resources/sprites/welcome.png");
+        welcomeButtonStart = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcome.png");
+        welcomeScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcomeScreen.png");
+        gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "sprites/gameOverBg.png");
+        gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
+
 
         victoryPosX = 1650;
         victoryPosY = 300;
@@ -65,16 +74,21 @@ class Game implements KeyboardHandler {
     }
 
     void start() {
-        keyboardEvents();
-        System.out.println(start);
 
+        keyboardEvents();
+
+        welcomeScreen.draw();
         while (start) {
+
             startScreen();
         }
+        welcomeButtonStart.delete();
         welcomeScreen.delete();
 
         //TODO: WELCOME SCREENS
         map.init();
+        npc.init();
+
         drawFloor();
         player.init();
         for (FallingRock r : rock) {
@@ -94,17 +108,23 @@ class Game implements KeyboardHandler {
             rock[number].fall();
 
             checkVictory();
-            getFloorAnimation();
+            getFloorAnimation(2);
             player.checkPlayerMovement();
+
             if (defeat) {
+                music.stopMusic();
+                music = new Music();
+                music.startMusic("/resources/music/gameOver.wav");
                 while (!reset) {
-                    gameOverFace = new Picture(centerX - 480, centerY - 320, "sprites/jojo_face_over.png");
-                    gameOver = new Picture(centerX - 480, centerY - 320, "sprites/game_over.png");
+
                     gameOver();
                 }
                 return;
             }
         }
+        //Winning Screen
+        winningScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/win_screen.png");
+        winningScreen.draw();
     }
 
     //TODO: ENDING SCREENS
@@ -188,24 +208,23 @@ class Game implements KeyboardHandler {
     }
 
     public void startScreen() {
-        int seconds;
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 800);
-        if (seconds % 2 == 0) {
-            welcomeScreen.draw();
+
+        if (timeCounter(0.5) % 2 == 0) {
+            welcomeButtonStart.draw();
         } else {
-            welcomeScreen.delete();
+            welcomeButtonStart.delete();
         }
         isStartScreen = true;
     }
 
+    public void instructionsScreen(){
+
+    }
+
     public void gameOver() {
-        int seconds;
-        long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 800);
 
         gameOverFace.draw();
-        if (seconds % 2 == 0) {
+        if (timeCounter(0.5) % 2 == 0) {
             gameOver.draw();
         } else {
             gameOver.delete();
@@ -226,12 +245,11 @@ class Game implements KeyboardHandler {
     private void detectCollision() {
         //Falling rocks
         for (int i = 0; i < rock.length; i++) {
-            if ((player.getX() >= rock[i].getX())
-                    && (player.getX() + player.getWidth() <= rock[i].getX() + rock[i].getWidth())) {
-                if (player.getY() <= rock[i].getY() + rock[i].getHeight()) {
-
-                    setDefeat();
-                }
+            if (player.getX() < rock[i].getX() + rock[i].getWidth()
+                    && player.getX() + player.getWidth() > rock[i].getX()
+                    && player.getY() < rock[i].getY() + rock[i].getHeight()
+                    && player.getY() + player.getHeight() > rock[i].getY()) {
+                setDefeat();
             }
         }
 
@@ -239,6 +257,7 @@ class Game implements KeyboardHandler {
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (player.getX() > floorBlocks[i].getX() && (player.getX() + player.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
                 if (!isTilesDraw[i]) {
+
                     player.setHitFloor(false);
                     player.gravity();
                     continue;
@@ -254,13 +273,18 @@ class Game implements KeyboardHandler {
         if (player.getY() + player.getHeight() >= map.getHeight() - 10) {
             setDefeat();
         }
+
+        //Winning place
+        if(player.getX() == npc.getPosX()-60){
+            victory = true;
+        }
     }
 
-    public int timeCounter() {
+    public int timeCounter(double delay) {
         int seconds;
-
+        double delayInSeconds = delay*1000;
         long nowMillis = System.currentTimeMillis();
-        seconds = (int) ((nowMillis - this.createdMillis) / 2000);
+        seconds = (int) ((nowMillis - this.createdMillis) / delayInSeconds);
         return seconds;
     }
 
@@ -273,9 +297,9 @@ class Game implements KeyboardHandler {
         victory = true;
     }
 
-    public void getFloorAnimation() {
+    public void getFloorAnimation(int delay) {
 
-        if (timeCounter() % 2 == 0) {
+        if (timeCounter(delay) % 2 == 0) {
             floorBlocks[4].draw();
             lavaBlock[4].delete();
             lavaBlock[4].draw();
@@ -285,7 +309,7 @@ class Game implements KeyboardHandler {
             isTilesDraw[4] = false;
         }
 
-        if (timeCounter() % 4 == 0) {
+        if (timeCounter(delay) % 4 == 0) {
             floorBlocks[10].draw();
             lavaBlock[10].delete();
             lavaBlock[10].draw();
@@ -295,7 +319,7 @@ class Game implements KeyboardHandler {
             isTilesDraw[10] = false;
         }
 
-        if (timeCounter() % 3 == 0) {
+        if (timeCounter(delay) % 3 == 0) {
             floorBlocks[8].draw();
             lavaBlock[8].delete();
             lavaBlock[8].draw();
