@@ -8,6 +8,9 @@ public class Screens {
     private Picture welcomeButtonStart;
     private Picture welcomeScreen;
     private Picture winningScreen;
+    private Picture instruction1;
+    private Picture instruction2;
+    private Picture instructionStartButton;
     private Picture gameOver;
     private Picture gameOverFace;
 
@@ -15,6 +18,9 @@ public class Screens {
 
         welcomeButtonStart = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcome.png");
         welcomeScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/welcomeScreen.png");
+        instruction1 = new Picture(Map.PADDING,Map.PADDING, "resources/sprites/instructions1.png");
+        instruction2 = new Picture(Map.PADDING,Map.PADDING,"resources/sprites/instructions2.png");
+        instructionStartButton = new Picture(Map.PADDING,Map.PADDING,"resources/sprites/spaceToContinue.png");
         gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "sprites/gameOverBg.png");
         gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
     }
@@ -29,6 +35,28 @@ public class Screens {
 
         welcomeButtonStart.delete();
         welcomeScreen.delete();
+        Utility.start = true;
+
+        while(Utility.start){
+            instruction1.draw();
+            if (Utility.timeCounter(0.5) % 2 == 0) {
+                instructionStartButton.draw();
+            } else {
+                instructionStartButton.delete();
+            }
+        }
+        instruction1.delete();
+        Utility.start = true;
+
+        while (Utility.start){
+            instruction2.draw();
+            if (Utility.timeCounter(0.5) % 2 == 0) {
+                instructionStartButton.draw();
+            } else {
+                instructionStartButton.delete();
+            }
+        }
+
     }
 
     public void startScreen() {

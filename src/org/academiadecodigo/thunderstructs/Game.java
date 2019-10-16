@@ -40,7 +40,6 @@ class Game {
         keyboardUtility.keyboardEvents();
         screens.welcomeScreen();
 
-        screens.welcomeScreen();
         //TODO: WELCOME SCREENS
         utility.getMap().init();
         npc.init();
@@ -87,22 +86,4 @@ class Game {
         screens.winningScreen();
         //Winning Screen
     }
-
-    //TODO: ENDING SCREENS
-
-
-
-
-
-
-
-    public void startScreen() {
-
-
-    }
-
-    public void instructionsScreen(){
-
-    }
-
 }
