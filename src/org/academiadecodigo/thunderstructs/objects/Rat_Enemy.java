@@ -10,7 +10,7 @@ public class Rat_Enemy {
     private boolean isDead;
 
     public Rat_Enemy(int posX) {
-        rat = new Picture(posX, 510, "resources/sprites/Enemies/ratEnemyLeft.png");
+        rat = new Picture(posX, 503, "resources/sprites/Enemies/ratEnemyLeft.png");
     }
 
     public void init() {

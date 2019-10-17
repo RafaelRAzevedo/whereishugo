@@ -7,7 +7,7 @@ import org.academiadecodigo.thunderstructs.Bomb;
 import org.academiadecodigo.thunderstructs.Utility;
 import org.academiadecodigo.thunderstructs.map.Map;
 
-public class Player implements KeyboardHandler {
+public class Player implements KeyboardHandler, Gravity {
 
     private Picture player;
     private int mapWidth;
@@ -152,7 +152,7 @@ public class Player implements KeyboardHandler {
         this.hitFloor = hitFloor;
     }
 
-    public void gravity() {
+    public void fall() {
         player.translate(0, Gravity.gravity);
     }
 
@@ -160,7 +160,4 @@ public class Player implements KeyboardHandler {
         return player;
     }
 
-    public void deployBomb() {
-
-    }
 }

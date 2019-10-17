@@ -137,12 +137,12 @@ public class Utility {
                 if (!isTilesDraw[i]) {
 
                     player.setHitFloor(false);
-                    player.gravity();
+                    player.fall();
                     continue;
                 }
                 //Gravity
                 while ((player.getY() + player.getHeight() < floorBlocks[i].getY())) {
-                    player.gravity();
+                    player.fall();
                     canMove = false;
                 }
             }

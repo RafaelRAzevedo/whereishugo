@@ -11,12 +11,14 @@ public class Bomb {
     private Rat_Enemy rat_enemy;
     private int counter;
     private boolean isBombDeployed;
+    private Music sfxBomb;
 
     public Bomb(Player player, Rat_Enemy rat_enemy) {
         bomb = new Picture(player.getX(), player.getY() + player.getHeight() - 35, "resources/sprites/bomb.png");
         this.rat_enemy = rat_enemy;
         this.player = player;
         isBombDeployed = true;
+        sfxBomb = new Music();
     }
 
     public boolean deployBomb() {
@@ -26,6 +28,7 @@ public class Bomb {
             bomb.delete();
             bomb = new Picture(bomb.getX() - 100, 410, "resources/sprites/explosion_1.png");
             bomb.draw();
+            sfxBomb.startMusic("/resources/music/Bomb.wav");
             try {
                 Thread.sleep(100);
             } catch (Exception e) {
@@ -34,6 +37,7 @@ public class Bomb {
             damage(player);
             rat_enemy.damage(this);
             isBombDeployed = false;
+            sfxBomb.stopMusic();
             bomb.delete();
             return false;
         }
@@ -58,6 +62,10 @@ public class Bomb {
 
     public int getWidth(){
         return bomb.getWidth();
+    }
+
+    public void grativy(){
+
     }
 }
 
