@@ -82,4 +82,11 @@ public class Screens {
             gameOver.delete();
         }
     }
+
+    public void cleanGameOver() {
+        gameOverFace.delete();
+        gameOver.delete();
+
+    }
 }
+

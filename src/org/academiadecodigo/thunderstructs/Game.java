@@ -24,9 +24,8 @@ class Game {
         player = new Player(map.getWidth(), map.getHeight());
         screens = new Screens();
         npc = new Npc();
-        utility = new Utility(player,map, npc);
+        utility = new Utility(player, map, npc);
         keyboardUtility = new KeyboardUtility(this, player, utility);
-
         restarted = false;
 
     }
@@ -34,23 +33,22 @@ class Game {
     void init() {
         keyboardUtility.keyboardEvents();
         screens.welcomeScreen();
+        Utility.getMap().init();
+        Utility.drawFloor();
+        player.init();
+        npc.init();
+        for (FallingRock r : Utility.getRock()) {
+            r.init();
+        }
     }
 
     void start() {
         restarted = true;
-        Utility.getMap().init();
-        Utility.drawFloor();
+
 
         music = new Music();
         music.startMusic("/resources/music/8BitCave.wav");
 
-        player.init();
-
-        for (FallingRock r : Utility.getRock()) {
-            r.init();
-        }
-
-        npc.init();
 
         while (!Utility.isVictory()) {
 
@@ -69,31 +67,33 @@ class Game {
             player.checkPlayerMovement();
 
             if (Utility.defeat) {
+
                 music.stopMusic();
                 music = new Music();
                 music.startMusic("/resources/music/gameOver.wav");
 
                 while (!Utility.reset) {
+
                     screens.gameOver();
                 }
+                restart();
 
-                music.stopMusic();
-                player = new Player(map.getWidth(),map.getHeight());
-                Utility.defeat = false;
-                Utility.reset = false;
-
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException ie) {
-                    System.out.println(ie);
-                }
-
-                restarted = false;
-                return;
             }
 
         }
 
         screens.winningScreen();
+    }
+
+    public void restart() {
+        music.stopMusic();
+        screens.cleanGameOver();
+
+        player.setPosition(player.getX(), player.getY());
+        Utility.defeat = false;
+        Utility.reset = false;
+
+        restarted = false;
+        start();
     }
 }

@@ -23,14 +23,15 @@ public class KeyboardUtility implements KeyboardHandler {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
             Utility.start = false;
         }
-        if (keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
-            Utility.reset = true;
-        }
+
     }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
+            Utility.reset = true;
+            Utility.defeat = false;
+        }
     }
 
     public void keyboardEvents() {
@@ -70,7 +71,7 @@ public class KeyboardUtility implements KeyboardHandler {
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
         r.setKey(KeyboardEvent.KEY_R);
-        r.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        r.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
 
         if (utility.isCanMove()) {

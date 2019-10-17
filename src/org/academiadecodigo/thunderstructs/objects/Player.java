@@ -143,5 +143,9 @@ public class Player implements KeyboardHandler {
         return player;
     }
 
+    public void setPosition(int x, int y) {
+        player.translate(50-x,470-y);
+    }
+
 
 }
