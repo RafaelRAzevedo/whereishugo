@@ -26,7 +26,7 @@ public class Player implements KeyboardHandler, Gravity {
             "sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight, Rat_Enemy rat_enemy) {
-        player = new Picture(50, 445, "sprites/characters/player-stand.png");
+        player = new Picture(50, 445, "resources/sprites/characters/player-stand.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
