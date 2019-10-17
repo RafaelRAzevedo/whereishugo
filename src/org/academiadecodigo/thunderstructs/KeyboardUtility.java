@@ -23,6 +23,9 @@ public class KeyboardUtility implements KeyboardHandler {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
             Utility.start = false;
         }
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
+            Utility.reset = true;
+        }
     }
 
     @Override
@@ -38,34 +41,36 @@ public class KeyboardUtility implements KeyboardHandler {
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
-        KeyboardEvent up = new KeyboardEvent();
+        //KeyboardEvent up = new KeyboardEvent();
+        KeyboardEvent r = new KeyboardEvent();
 
         KeyboardEvent leftRelease = new KeyboardEvent();
         KeyboardEvent rightRelease = new KeyboardEvent();
         KeyboardEvent upRelease = new KeyboardEvent();
 
-
-
-        left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKey(KeyboardEvent.KEY_LEFT);
+        left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
-        leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         leftRelease.setKey(KeyboardEvent.KEY_LEFT);
+        leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
-        right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKey(KeyboardEvent.KEY_RIGHT);
+        right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
-        rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
+        rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
-        up.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        up.setKey(KeyboardEvent.KEY_UP);
+        //up.setKey(KeyboardEvent.KEY_UP);
+        //up.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
-        upRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         upRelease.setKey(KeyboardEvent.KEY_UP);
+        upRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
-        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKey(KeyboardEvent.KEY_SPACE);
+        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+
+        r.setKey(KeyboardEvent.KEY_R);
+        r.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
 
         if (utility.isCanMove()) {
@@ -73,8 +78,9 @@ public class KeyboardUtility implements KeyboardHandler {
             keyboard.addEventListener(left);
         }
 
-        keyboard.addEventListener(up);
+        //keyboard.addEventListener(up);
         keyboard1.addEventListener(space);
+        keyboard1.addEventListener(r);
 
         keyboard.addEventListener(leftRelease);
         keyboard.addEventListener(rightRelease);

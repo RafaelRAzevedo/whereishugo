@@ -5,15 +5,8 @@ import org.academiadecodigo.thunderstructs.map.Map;
 
 public class Floor extends Map {
 
-    private Picture floorTile;
-    private Picture lava;
-
-
     private int tileSize;
-
-
-    //private boolean floorDeleted;
-
+    private Picture floorTile;
     private Picture[] tiles;
 
 

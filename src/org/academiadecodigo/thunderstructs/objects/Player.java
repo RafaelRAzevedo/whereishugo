@@ -63,9 +63,9 @@ public class Player implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_UP:
+            /*case KeyboardEvent.KEY_UP:
                 up = false;
-                break;
+                break;*/
             case KeyboardEvent.KEY_LEFT:
                 //animation("LEFT");
                 left = false;
@@ -77,10 +77,18 @@ public class Player implements KeyboardHandler {
     }
 
     public void checkPlayerMovement() {
-        if (up && !jump) {
+/*        if (up && !jump) {
             velocityY = -25;
             jump = true;
         }
+        velocityY *= 0.90;
+
+        if (velocityY == 0 && jump) {
+
+            velocityY = 25;
+            jump = false;
+
+        }*/
 
         if (left && !right) {
             //velocityX = -3;
@@ -96,14 +104,8 @@ public class Player implements KeyboardHandler {
             velocityX = 0;
         }
 
-        velocityY *= 0.90;
+        velocityY = 0;
 
-        if (velocityY == 0 && jump) {
-
-            velocityY = 25;
-            jump = false;
-
-        }
         velocityX *= 0.90;
         player.translate(velocityX, velocityY);
         player.draw();
