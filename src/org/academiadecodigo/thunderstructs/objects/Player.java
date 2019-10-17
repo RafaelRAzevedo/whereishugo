@@ -26,7 +26,7 @@ public class Player implements KeyboardHandler, Gravity {
             "sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight, Rat_Enemy rat_enemy) {
-        player = new Picture(50, 470, "sprites/player/player_idle_right.png");
+        player = new Picture(50, 445, "sprites/characters/player-stand.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
@@ -70,9 +70,9 @@ public class Player implements KeyboardHandler, Gravity {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_UP:
+            /*case KeyboardEvent.KEY_UP:
                 up = false;
-                break;
+                break;*/
             case KeyboardEvent.KEY_LEFT:
                 //animation("LEFT");
                 left = false;
@@ -84,10 +84,18 @@ public class Player implements KeyboardHandler, Gravity {
     }
 
     public void checkPlayerMovement() {
-        if (up && !jump) {
+/*        if (up && !jump) {
             velocityY = -25;
             jump = true;
         }
+        velocityY *= 0.90;
+
+        if (velocityY == 0 && jump) {
+
+            velocityY = 25;
+            jump = false;
+
+        }*/
 
         if (left && !right) {
             //velocityX = -3;
@@ -103,14 +111,8 @@ public class Player implements KeyboardHandler, Gravity {
             velocityX = 0;
         }
 
-        velocityY *= 0.90;
+        velocityY = 0;
 
-        if (velocityY == 0 && jump) {
-
-            velocityY = 25;
-            jump = false;
-
-        }
         velocityX *= 0.90;
         player.translate(velocityX, velocityY);
         player.draw();
@@ -157,5 +159,10 @@ public class Player implements KeyboardHandler, Gravity {
     public Picture getPlayer() {
         return player;
     }
+
+    public void setPosition(int x, int y) {
+        player.translate(50-x,445-y);
+    }
+
 
 }

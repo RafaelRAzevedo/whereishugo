@@ -7,8 +7,10 @@ public class Rat_Enemy {
 
     private Picture rat;
     private boolean isDead;
+    private int posX;
 
     public Rat_Enemy(int posX) {
+        this.posX = posX;
         rat = new Picture(posX, 503, "resources/sprites/Enemies/ratEnemyLeft.png");
     }
 
@@ -19,10 +21,10 @@ public class Rat_Enemy {
     public void ratMovement() {
         if (!isDead) {
             if (Utility.timeCounter(2) % 2 == 0) {
-                rat.translate(1, 0);
+                rat.translate(2, 0);
                 rat.draw();
             } else {
-                rat.translate(-1, 0);
+                rat.translate(-2, 0);
                 rat.draw();
             }
         }
@@ -49,5 +51,9 @@ public class Rat_Enemy {
 
     public boolean isDead(){
         return isDead;
+    }
+
+    public void setPosition(int x){
+        rat.translate(posX-x,0);
     }
 }

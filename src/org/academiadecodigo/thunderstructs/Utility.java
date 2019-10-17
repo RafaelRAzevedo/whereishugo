@@ -7,24 +7,25 @@ import org.academiadecodigo.thunderstructs.objects.*;
 public class Utility {
 
     private static final long createdMillis = System.currentTimeMillis();
-    private int numberOfRocks = 10;
+    private static int numberOfRocks = 10;
 
-    private boolean victory;
-    private static boolean defeat;
+    public static boolean victory;
+    public static boolean defeat;
     public static boolean start;
+    public static boolean reset;
 
-    private boolean canMove;
+    public static boolean canMove;
 
-    private Floor floor;
-    private Map map;
-    private Player player;
-    private Npc npc;
-    private Rat_Enemy rat_enemy;
+    public static Floor floor;
+    public static Map map;
+    public static Player player;
+    public static  Npc npc;
 
-    private FallingRock[] rock = new FallingRock[numberOfRocks];
-    private Picture[] floorBlocks;
-    private Picture[] lavaBlock;
-    private Boolean[] isTilesDraw;
+    private static Rat_Enemy rat_enemy;
+    public static FallingRock[] rock = new FallingRock[numberOfRocks];
+    public static Picture[] floorBlocks;
+    public static Picture[] lavaBlock;
+    public static Boolean[] isTilesDraw;
 
     public Utility(Player player, Map map, Npc npc, Rat_Enemy rat_enemy) {
 
@@ -39,16 +40,19 @@ public class Utility {
         this.npc = npc;
         this.rat_enemy = rat_enemy;
 
+        start = true;
+        canMove = true;
+
+        reset = false;
         victory = false;
         defeat = false;
-        canMove = true;
-        start = true;
+        reset = false;
     }
 
-    public void checkVictory() {
+    public static void checkVictory() {
 
         if (player.getX() >= npc.getPosX() - 50) {
-            System.out.println("WIN");
+            //System.out.println("WIN");
             setVictory();
         }
     }
@@ -62,7 +66,7 @@ public class Utility {
         return seconds;
     }
 
-    public void getFloorAnimation(int delay) {
+    public static void getFloorAnimation(int delay) {
 
         if (timeCounter(delay) % 2 == 0) {
             floorBlocks[4].draw();
@@ -96,7 +100,7 @@ public class Utility {
 
     }
 
-    public void drawFloor() {
+    public static void drawFloor() {
         floorBlocks = new Picture[floor.getTiles().length];
 
         //Check if floor is drawn or not.
@@ -119,7 +123,7 @@ public class Utility {
         }
     }
 
-    public void detectCollision() {
+    public static void detectCollision() {
         //Falling rocks
         for (int i = 0; i < rock.length; i++) {
             if (player.getX() < rock[i].getX() + rock[i].getWidth()
@@ -167,7 +171,7 @@ public class Utility {
         }
     }
 
-    public void detectFloor() {
+    public static void detectFloor() {
 
         for (int i = 0; i < floorBlocks.length - 1; i++) {
             if (rat_enemy.getX() == floorBlocks[i].getX()) {
@@ -190,43 +194,40 @@ public class Utility {
             }
             if (rat_enemy.getX() + rat_enemy.getWidth() >= map.getWidth() + Map.PADDING) {
                 rat_enemy.moveRat(-2);
-                System.out.println(map.getWidth() - Map.PADDING);
-                System.out.println(rat_enemy.getX());
             }
 
         }
-
     }
 
-    public FallingRock[] getRock() {
+    public static FallingRock[] getRock() {
         return rock;
     }
 
-    public Map getMap() {
+    public static Map getMap() {
         return map;
     }
 
-    public int getNumberOfRocks() {
+    public static int getNumberOfRocks() {
         return numberOfRocks;
     }
 
-    public void setDefeat() {
+    public static void setDefeat() {
         defeat = true;
     }
 
-    public void setVictory() {
+    public static void setVictory() {
         victory = true;
     }
 
-    public boolean isCanMove() {
+    public static boolean isCanMove() {
         return canMove;
     }
 
-    public boolean isVictory() {
+    public static boolean isVictory() {
         return victory;
     }
 
-    public boolean isDefeat() {
+    public static boolean isDefeat() {
         return defeat;
     }
 

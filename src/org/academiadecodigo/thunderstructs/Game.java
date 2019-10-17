@@ -1,5 +1,6 @@
 package org.academiadecodigo.thunderstructs;
 
+import jdk.jshell.execution.Util;
 import org.academiadecodigo.thunderstructs.map.Map;
 import org.academiadecodigo.thunderstructs.objects.FallingRock;
 import org.academiadecodigo.thunderstructs.objects.Npc;
@@ -14,15 +15,11 @@ class Game {
     private Map map;
     private Rat_Enemy ratEnemy;
     private KeyboardUtility keyboardUtility;
-
-    private Screens screens;
-    private Utility utility;
-
-    private boolean reset;
-    private boolean start = true;
-
     private Music music;
+    private Utility utility;
+    private Screens screens;
 
+    public static boolean restarted;
 
     Game() {
 
@@ -32,59 +29,75 @@ class Game {
         ratEnemy = new Rat_Enemy(400);
         player = new Player(map.getWidth(), map.getHeight(), ratEnemy);
 
-        utility = new Utility(player,map, npc,ratEnemy);
+        utility = new Utility(player, map, npc, ratEnemy);
         keyboardUtility = new KeyboardUtility(this, player, utility);
+        restarted = false;
 
     }
 
-    void start() {
+    void init() {
         keyboardUtility.keyboardEvents();
         screens.welcomeScreen();
-
-        //TODO: WELCOME SCREENS
-        utility.getMap().init();
-        npc.init();
-
-        utility.drawFloor();
+        Utility.getMap().init();
+        Utility.drawFloor();
         player.init();
-        ratEnemy.init();
+        npc.init();
         for (FallingRock r : utility.getRock()) {
             r.init();
         }
+    }
+
+    void start() {
+        restarted = true;
+        ratEnemy.init();
+
         music = new Music();
         music.startMusic("/resources/music/8BitCave.wav");
-
-        while (!utility.isVictory()) {
-
-            int number = (int) (Math.random() * utility.getNumberOfRocks());
-            utility.checkVictory();
-            utility.detectCollision();
-
+        while (!Utility.isVictory()) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ie) {
                 System.out.println(ie);
             }
 
-            utility.getRock()[number].fall();
-            utility.detectFloor();
-            utility.getFloorAnimation(2);
+            int number = (int) (Math.random() * Utility.getNumberOfRocks());
+            Utility.rock[number].fall();
+
+            Utility.checkVictory();
+            Utility.detectCollision();
+            Utility.getFloorAnimation(2);
             player.checkPlayerMovement();
             ratEnemy.ratMovement();
+            Utility.detectFloor();
 
-            if (utility.isDefeat()) {
+            if (Utility.defeat) {
+
                 music.stopMusic();
                 music = new Music();
                 music.startMusic("/resources/music/gameOver.wav");
-                while (!reset) {
+
+                while (!Utility.reset) {
+
                     screens.gameOver();
                 }
-                return;
+                restart();
             }
-
         }
-
         screens.winningScreen();
-        //Winning Screen
+
+    }
+
+
+    public void restart() {
+        music.stopMusic();
+        screens.cleanGameOver();
+
+        player.setPosition(player.getX(), player.getY());
+        ratEnemy.setPosition(ratEnemy.getX());
+        Utility.defeat = false;
+        Utility.reset = false;
+
+        restarted = false;
+        start();
     }
 }

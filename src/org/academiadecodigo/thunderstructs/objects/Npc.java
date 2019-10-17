@@ -1,6 +1,5 @@
 package org.academiadecodigo.thunderstructs.objects;
 
-import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
@@ -14,11 +13,10 @@ public class Npc {
 
     private String[] npcSprites = {
             "sprites/player/player_stand.png"
-
     };
 
     public Npc() {
-        npc = new Picture(800, 445, "sprites/characters/hugo.png");
+        npc = new Picture(900, 445, "sprites/characters/hugo.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
     }
@@ -26,7 +24,7 @@ public class Npc {
     public void init() {
         npc.draw();
         //npc.grow(0, 0);
-        //talk(); //Podemos meter talk animation idk
+        //talk();
 
     }
     public int getPosX() {

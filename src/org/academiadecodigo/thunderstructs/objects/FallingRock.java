@@ -6,7 +6,6 @@ import org.academiadecodigo.thunderstructs.map.Map;
 public class FallingRock implements Gravity {
 
     private int mapHeight;
-    private int mapWidth;
     private Picture rock;
     private int posX;
     private int posY;
@@ -19,13 +18,11 @@ public class FallingRock implements Gravity {
         rock = new Picture(posX, posY, "resources/sprites/finalStone.png");
 
         this.mapHeight = mapHeight;
-        this.mapWidth = mapWidth;
     }
 
     public void init() {
         rock.draw();
     }
-
 
     @Override
     public void fall() {

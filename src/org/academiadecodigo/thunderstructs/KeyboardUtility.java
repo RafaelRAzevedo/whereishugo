@@ -23,11 +23,15 @@ public class KeyboardUtility implements KeyboardHandler {
         if (keyboardEvent.getKey() == KeyboardEvent.KEY_SPACE) {
             Utility.start = false;
         }
+
     }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
+        if (keyboardEvent.getKey() == KeyboardEvent.KEY_R) {
+            Utility.reset = true;
+            Utility.defeat = false;
+        }
     }
 
     public void keyboardEvents() {
@@ -38,8 +42,8 @@ public class KeyboardUtility implements KeyboardHandler {
         KeyboardEvent left = new KeyboardEvent();
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
-        KeyboardEvent up = new KeyboardEvent();
         KeyboardEvent b = new KeyboardEvent();
+        KeyboardEvent r = new KeyboardEvent();
 
         KeyboardEvent leftRelease = new KeyboardEvent();
         KeyboardEvent rightRelease = new KeyboardEvent();
@@ -50,6 +54,7 @@ public class KeyboardUtility implements KeyboardHandler {
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKey(KeyboardEvent.KEY_LEFT);
+        left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
         leftRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         leftRelease.setKey(KeyboardEvent.KEY_LEFT);
@@ -60,23 +65,19 @@ public class KeyboardUtility implements KeyboardHandler {
         rightRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         rightRelease.setKey(KeyboardEvent.KEY_RIGHT);
 
-        up.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        up.setKey(KeyboardEvent.KEY_UP);
-
-        upRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        upRelease.setKey(KeyboardEvent.KEY_UP);
-
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         space.setKey(KeyboardEvent.KEY_SPACE);
 
+        r.setKey(KeyboardEvent.KEY_R);
+        r.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
         if (utility.isCanMove()) {
             keyboard.addEventListener(right);
             keyboard.addEventListener(left);
         }
 
-        keyboard.addEventListener(up);
         keyboard1.addEventListener(space);
+        keyboard1.addEventListener(r);
         keyboard.addEventListener(b);
 
         keyboard.addEventListener(leftRelease);
