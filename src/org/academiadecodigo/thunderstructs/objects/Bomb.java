@@ -1,8 +1,8 @@
-package org.academiadecodigo.thunderstructs;
+package org.academiadecodigo.thunderstructs.objects;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-import org.academiadecodigo.thunderstructs.objects.Player;
-import org.academiadecodigo.thunderstructs.objects.Rat_Enemy;
+import org.academiadecodigo.thunderstructs.Music;
+import org.academiadecodigo.thunderstructs.Utility;
 
 public class Bomb {
 
@@ -64,8 +64,5 @@ public class Bomb {
         return bomb.getWidth();
     }
 
-    public void grativy(){
-
-    }
 }
 

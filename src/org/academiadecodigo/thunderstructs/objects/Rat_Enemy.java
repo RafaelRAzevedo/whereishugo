@@ -1,7 +1,6 @@
 package org.academiadecodigo.thunderstructs.objects;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-import org.academiadecodigo.thunderstructs.Bomb;
 import org.academiadecodigo.thunderstructs.Utility;
 
 public class Rat_Enemy {
@@ -42,14 +41,6 @@ public class Rat_Enemy {
 
     public int getWidth() {
         return rat.getWidth();
-    }
-
-    public int getY() {
-        return rat.getY();
-    }
-
-    public int getHeight() {
-        return rat.getHeight();
     }
 
     public void moveRat(int posX) {

@@ -3,8 +3,6 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-import org.academiadecodigo.thunderstructs.Bomb;
-import org.academiadecodigo.thunderstructs.Utility;
 import org.academiadecodigo.thunderstructs.map.Map;
 
 public class Player implements KeyboardHandler, Gravity {

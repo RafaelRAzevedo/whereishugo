@@ -7,7 +7,7 @@ import org.academiadecodigo.thunderstructs.objects.*;
 public class Utility {
 
     private static final long createdMillis = System.currentTimeMillis();
-    private int numberOfRocks = 3;
+    private int numberOfRocks = 10;
 
     private boolean victory;
     private static boolean defeat;
@@ -20,7 +20,6 @@ public class Utility {
     private Player player;
     private Npc npc;
     private Rat_Enemy rat_enemy;
-
 
     private FallingRock[] rock = new FallingRock[numberOfRocks];
     private Picture[] floorBlocks;
@@ -194,6 +193,7 @@ public class Utility {
                 System.out.println(map.getWidth() - Map.PADDING);
                 System.out.println(rat_enemy.getX());
             }
+
         }
 
     }
