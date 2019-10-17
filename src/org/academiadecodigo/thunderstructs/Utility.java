@@ -153,9 +153,7 @@ public class Utility {
 
         //rat collision
         if (!rat_enemy.isDead()) {
-            System.out.println(rat_enemy.getX());
             if (player.getX() + player.getWidth() >= rat_enemy.getX() || player.getX() > rat_enemy.getX() + rat_enemy.getWidth()) {
-                System.out.println();
                 setDefeat();
             }
         }

@@ -53,6 +53,10 @@ public class Rat_Enemy {
         return isDead;
     }
 
+    public void setDead(boolean dead){
+        this.isDead = dead;
+    }
+
     public void setPosition(int x){
         rat.translate(posX-x,0);
     }

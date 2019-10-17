@@ -49,6 +49,7 @@ class Game {
 
     void start() {
         restarted = true;
+        ratEnemy.setDead(false);
         ratEnemy.init();
 
         music = new Music();

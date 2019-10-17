@@ -24,8 +24,8 @@ public class Screens {
         instruction2 = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/instructions2.png");
         instruction3 = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/instructions3.png");
         instructionStartButton = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/spaceToContinue.png");
-        gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "sprites/gameOverBg.png");
-        gameOver = new Picture(Map.PADDING, Map.PADDING, "sprites/gameOverTxt.png");
+        gameOverFace = new Picture(Map.PADDING, Map.PADDING + 10, "resources/sprites/gameOverBg.png");
+        gameOver = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/gameOverTxt.png");
         reset = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/pressR.png");
     }
 
