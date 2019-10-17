@@ -27,10 +27,10 @@ class Game {
     Game() {
 
         map = new Map();
-        player = new Player(map.getWidth(), map.getHeight());
         screens = new Screens();
         npc = new Npc();
         ratEnemy = new Rat_Enemy(400);
+        player = new Player(map.getWidth(), map.getHeight(), ratEnemy);
 
         utility = new Utility(player,map, npc,ratEnemy);
         keyboardUtility = new KeyboardUtility(this, player, utility);
@@ -76,8 +76,6 @@ class Game {
                 music.stopMusic();
                 music = new Music();
                 music.startMusic("/resources/music/gameOver.wav");
-
-
                 while (!reset) {
                     screens.gameOver();
                 }

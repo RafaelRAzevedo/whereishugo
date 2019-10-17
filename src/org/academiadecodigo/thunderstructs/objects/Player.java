@@ -3,6 +3,8 @@ package org.academiadecodigo.thunderstructs.objects;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.thunderstructs.Bomb;
+import org.academiadecodigo.thunderstructs.Utility;
 import org.academiadecodigo.thunderstructs.map.Map;
 
 public class Player implements KeyboardHandler {
@@ -11,10 +13,13 @@ public class Player implements KeyboardHandler {
     private int mapWidth;
     private int mapHeight;
     private boolean hitFloor;
+    private Bomb bomb;
+    private boolean deploy;
+    private Rat_Enemy rat_enemy;
 
     private int velocityX;
     private int velocityY;
-    private boolean left, right, up, jump;
+    private boolean left, right, up, jump, deployedBomb;
 
     private String[] sprites = {"sprites/player/player_idle_right.png",
             "sprites/player/player_walk1.png",
@@ -22,12 +27,13 @@ public class Player implements KeyboardHandler {
             "sprites/player/player_idle.png",
             "sprites/player/player_idle_left.png",};
 
-    public Player(int mapWidth, int mapHeight) {
+    public Player(int mapWidth, int mapHeight, Rat_Enemy rat_enemy) {
         player = new Picture(50, 470, "sprites/player/player_idle_right.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
         this.velocityY = 0;
+        this.rat_enemy = rat_enemy;
     }
 
     public void init() {
@@ -56,6 +62,9 @@ public class Player implements KeyboardHandler {
                 break;
             case KeyboardEvent.KEY_UP:
                 up = true;
+                break;
+            case KeyboardEvent.KEY_B:
+                deploy = true;
                 break;
         }
     }
@@ -107,6 +116,16 @@ public class Player implements KeyboardHandler {
         velocityX *= 0.90;
         player.translate(velocityX, velocityY);
         player.draw();
+
+        if(deployedBomb){
+            deploy = false;
+           deployedBomb = bomb.deployBomb();
+        }
+
+        if (deploy) {
+            bomb = new Bomb(this, rat_enemy);
+            deployedBomb = bomb.drawBomb();
+        }
     }
 
     public int getWidth() {
@@ -141,5 +160,7 @@ public class Player implements KeyboardHandler {
         return player;
     }
 
+    public void deployBomb() {
 
+    }
 }

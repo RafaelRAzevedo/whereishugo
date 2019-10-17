@@ -39,12 +39,14 @@ public class KeyboardUtility implements KeyboardHandler {
         KeyboardEvent right = new KeyboardEvent();
         KeyboardEvent space = new KeyboardEvent();
         KeyboardEvent up = new KeyboardEvent();
+        KeyboardEvent b = new KeyboardEvent();
 
         KeyboardEvent leftRelease = new KeyboardEvent();
         KeyboardEvent rightRelease = new KeyboardEvent();
         KeyboardEvent upRelease = new KeyboardEvent();
 
-
+        b.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        b.setKey(KeyboardEvent.KEY_B);
 
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKey(KeyboardEvent.KEY_LEFT);
@@ -75,6 +77,7 @@ public class KeyboardUtility implements KeyboardHandler {
 
         keyboard.addEventListener(up);
         keyboard1.addEventListener(space);
+        keyboard.addEventListener(b);
 
         keyboard.addEventListener(leftRelease);
         keyboard.addEventListener(rightRelease);

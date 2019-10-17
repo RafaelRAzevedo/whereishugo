@@ -7,10 +7,10 @@ import org.academiadecodigo.thunderstructs.objects.*;
 public class Utility {
 
     private static final long createdMillis = System.currentTimeMillis();
-    private int numberOfRocks = 10;
+    private int numberOfRocks = 3;
 
     private boolean victory;
-    private boolean defeat;
+    private static boolean defeat;
     public static boolean start;
 
     private boolean canMove;
@@ -20,6 +20,7 @@ public class Utility {
     private Player player;
     private Npc npc;
     private Rat_Enemy rat_enemy;
+
 
     private FallingRock[] rock = new FallingRock[numberOfRocks];
     private Picture[] floorBlocks;
@@ -147,6 +148,16 @@ public class Utility {
             }
         }
 
+        //rat collision
+        if (!rat_enemy.isDead()) {
+            System.out.println(rat_enemy.getX());
+            if (player.getX() + player.getWidth() >= rat_enemy.getX() || player.getX() > rat_enemy.getX() + rat_enemy.getWidth()) {
+                System.out.println();
+                setDefeat();
+            }
+        }
+
+        //if player falls
         if (player.getY() + player.getHeight() >= map.getHeight() - 10) {
             setDefeat();
         }
@@ -160,13 +171,31 @@ public class Utility {
     public void detectFloor() {
 
         for (int i = 0; i < floorBlocks.length - 1; i++) {
-            if (rat_enemy.getX() > floorBlocks[i].getX() && (rat_enemy.getX() + rat_enemy.getWidth() - 5 < floorBlocks[i].getX() + floorBlocks[i].getWidth())) {
-                if (!isTilesDraw[i]) {
-                    rat_enemy.gravity();
+            if (rat_enemy.getX() == floorBlocks[i].getX()) {
+                if (i == 0) {
+                    continue;
+                }
+                if (!isTilesDraw[i - 1]) {
+                    rat_enemy.moveRat(2);
+                }
+            } else {
+                if ((rat_enemy.getX() + rat_enemy.getWidth()) == floorBlocks[i].getX() + floorBlocks[i].getWidth()) {
+                    if (i == floorBlocks.length) {
+                        continue;
+                    }
+                    if (!isTilesDraw[i + 1]) {
+                        rat_enemy.moveRat(-2);
 
+                    }
                 }
             }
+            if (rat_enemy.getX() + rat_enemy.getWidth() >= map.getWidth() + Map.PADDING) {
+                rat_enemy.moveRat(-2);
+                System.out.println(map.getWidth() - Map.PADDING);
+                System.out.println(rat_enemy.getX());
+            }
         }
+
     }
 
     public FallingRock[] getRock() {
@@ -203,6 +232,10 @@ public class Utility {
 
     public static void setStart() {
         start = false;
+    }
+
+    public static void playerDead() {
+        defeat = true;
     }
 
 }
