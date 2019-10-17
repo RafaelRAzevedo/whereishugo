@@ -9,7 +9,6 @@ public class Floor extends Map {
     private Picture floorTile;
     private Picture[] tiles;
 
-
     public Floor(int mapWidth) {
         floorTile = new Picture( Map.PADDING, Map.PADDING, "resources/sprites/blockTexture.png");
         tileSize = floorTile.getWidth();

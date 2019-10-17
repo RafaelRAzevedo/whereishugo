@@ -69,7 +69,7 @@ public class Screens {
     }
 
     public void winningScreen() {
-        winningScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/win_screen.png");
+        winningScreen = new Picture(Map.PADDING, Map.PADDING, "resources/sprites/victory.png");
         winningScreen.draw();
     }
 

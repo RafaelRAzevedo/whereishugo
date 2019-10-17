@@ -23,7 +23,7 @@ public class Player implements KeyboardHandler {
             "sprites/player/player_idle_left.png",};
 
     public Player(int mapWidth, int mapHeight) {
-        player = new Picture(50, 470, "sprites/player/player_idle_right.png");
+        player = new Picture(50, 445, "sprites/characters/player-stand.png");
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.velocityX = 0;
@@ -119,7 +119,7 @@ public class Player implements KeyboardHandler {
         return player.getHeight();
     }
 
-    public void animation(String animation) {
+   /* public void animation(String animation) {
         switch (animation) {
             case "FALLING":
                 player.delete();
@@ -129,7 +129,7 @@ public class Player implements KeyboardHandler {
                 player = new Picture(getX(), getY(), sprites[4]);
                 break;
         }
-    }
+    }*/
 
     public void setHitFloor(boolean hitFloor) {
         this.hitFloor = hitFloor;
@@ -144,7 +144,7 @@ public class Player implements KeyboardHandler {
     }
 
     public void setPosition(int x, int y) {
-        player.translate(50-x,470-y);
+        player.translate(50-x,445-y);
     }
 
 

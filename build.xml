@@ -1,7 +1,7 @@
-<project name="antTest" basedir="." default="jarfile">
+<project name="where-is-hugo" basedir="." default="jarfile">
 
     <target name="init" description="Init all the properties">
-        <property name="project.name" value="antTest"/>
+        <property name="project.name" value="where-is-hugo"/>
         <property name="src.dir" value="src"/>
         <property name="main.class" value="org.academiadecodigo.thunderstructs.Main"/>
         <property name="build.dir" value="build"/>

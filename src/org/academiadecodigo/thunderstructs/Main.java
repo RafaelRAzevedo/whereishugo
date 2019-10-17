@@ -9,19 +9,6 @@ public class Main {
         game.init();
         game.start();
 
-
-
-/*        while(true) {
-            if (Game.restarted) {
-                game = new Game();
-                game.start();
-            } else{
-                game.start();
-            }
-        }*/
-
     }
-
-
 
 }
